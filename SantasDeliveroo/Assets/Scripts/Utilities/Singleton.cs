@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gioripoz {
+namespace Gioripoz
+{
     public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         //Classe generica per i singleton
@@ -12,15 +13,7 @@ namespace Gioripoz {
         {
             get
             {
-                //Debug.Assert(instance != null);
-                if (instance != null)
-                {
-                    return instance;
-                }
-                else
-                {
-                    return null;
-                }
+                return instance;
             }
         }
 

@@ -27,10 +27,20 @@ public class Santa : MonoBehaviour
         StartCoroutine(cMove());
     }
 
+    public void AddPathPoint(PathPoint point)
+    {
+        pathPoints.Add(point);
+    }
+    public void AddNewPath(PathPoint point)
+    {
+        pathPoints = new List<PathPoint> { point };
+    }
+
     private IEnumerator cMove()
     {
         float lerpTime = 0;
         Vector3 startPosition = transform.position;
+        Vector3 target = Vector3.zero;
         for(; ; )
         {
             //move only if have path points
@@ -42,8 +52,15 @@ public class Santa : MonoBehaviour
                     startPosition = transform.position;
                     StartCoroutine(cSmoothLookAt(pathPoints[0].position));
                 }
+                if(target != pathPoints[0].position)
+                {
+                    target = pathPoints[0].position;
+                    startPosition = transform.position;
+                    lerpTime = 0;
+                    StartCoroutine(cSmoothLookAt(pathPoints[0].position));
+                }
                 transform.position = Vector3.Lerp(startPosition, pathPoints[0].position, lerpTime);
-                lerpTime += Time.deltaTime;
+                lerpTime += Time.deltaTime * speed;
                 //if lerpo is 1 it means it reached the position
                 if(lerpTime > 1)
                 {
@@ -59,7 +76,7 @@ public class Santa : MonoBehaviour
     {
         float lerpTimer = 0;
         Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = transform.rotation * Quaternion.LookRotation((transform.position-lookAtPoint), transform.up);
+        Quaternion endRotation = Quaternion.LookRotation((lookAtPoint- transform.position), Vector3.up);
         while (lerpTimer < 1)
         {
             lerpTimer += Time.deltaTime * lookAtSpeed;
@@ -92,6 +109,7 @@ public class Santa : MonoBehaviour
         {
             gifts.Add(gift);
             gift.Owner = this;
+            gift.PickUpGameobject();
         }
     }
 

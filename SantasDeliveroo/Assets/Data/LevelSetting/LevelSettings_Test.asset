@@ -17,12 +17,12 @@ MonoBehaviour:
   santasSettings:
     prefab: {fileID: 3312274726564334358, guid: bd41d18e7f3f6c043869fd139d10f733, type: 3}
     amount: 3
-    speed: 0
+    speed: 1
     spawnArea: {x: 111.1, y: 0, z: 39.98}
-    spawnAreaCenter: {x: 0, y: 27.6, z: 0}
+    spawnAreaCenter: {x: 0, y: 1, z: 0}
   befanasSettings:
     prefab: {fileID: 1379165798997424665, guid: b05def3bceb0f284db069683d34c5c98, type: 3}
     amount: 3
     speed: 0
     spawnArea: {x: 111.1, y: 0, z: 39.98}
-    spawnAreaCenter: {x: -118.5, y: 16.93, z: 84.5}
+    spawnAreaCenter: {x: -118.5, y: 1, z: 84.5}

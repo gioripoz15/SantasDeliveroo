@@ -16,7 +16,7 @@ public class LevelManager : Singleton<LevelManager>
         CreateBefanas();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if(settings)
         {
