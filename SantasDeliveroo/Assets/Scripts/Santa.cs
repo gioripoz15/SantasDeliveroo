@@ -41,6 +41,7 @@ public class Santa : MonoBehaviour
         float lerpTime = 0;
         Vector3 startPosition = transform.position;
         Vector3 target = Vector3.zero;
+        float distance = 0;
         for(; ; )
         {
             //move only if have path points
@@ -50,6 +51,7 @@ public class Santa : MonoBehaviour
                 if (lerpTime == 0)
                 {
                     startPosition = transform.position;
+                    distance = (startPosition - pathPoints[0].position).magnitude;
                     StartCoroutine(cSmoothLookAt(pathPoints[0].position));
                 }
                 if(target != pathPoints[0].position)
@@ -57,10 +59,11 @@ public class Santa : MonoBehaviour
                     target = pathPoints[0].position;
                     startPosition = transform.position;
                     lerpTime = 0;
+                    distance = (startPosition - pathPoints[0].position).magnitude;
                     StartCoroutine(cSmoothLookAt(pathPoints[0].position));
                 }
                 transform.position = Vector3.Lerp(startPosition, pathPoints[0].position, lerpTime);
-                lerpTime += Time.deltaTime * speed;
+                lerpTime += (Time.deltaTime * speed/ distance);
                 //if lerpo is 1 it means it reached the position
                 if(lerpTime > 1)
                 {

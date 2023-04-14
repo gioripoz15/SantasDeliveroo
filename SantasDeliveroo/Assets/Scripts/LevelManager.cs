@@ -10,10 +10,14 @@ public class LevelManager : Singleton<LevelManager>
     private SantaHandler santaHandler;
     private BefanaHandler befanaHandler;
 
+    [SerializeField]
+    private LevelGenerator levelGenerator;
+
     private void Start()
     {
         CreateSantas();
         CreateBefanas();
+        CreateLevel();
     }
 
     private void OnDrawGizmosSelected()
@@ -36,5 +40,10 @@ public class LevelManager : Singleton<LevelManager>
     {
         befanaHandler = (new GameObject("BefanaHandler")).AddComponent<BefanaHandler>();
         befanaHandler.BefanasSettings = settings.befanasSettings;
+    }
+
+    private void CreateLevel()
+    {
+        levelGenerator.GenerateLevel(settings.houseAmount,settings.giftsAmount);
     }
 }

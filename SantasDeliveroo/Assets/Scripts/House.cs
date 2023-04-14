@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class House : MonoBehaviour
 {
-	
+	public List<Gift> assignedGifts = new List<Gift>();
 }
