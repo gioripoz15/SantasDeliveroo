@@ -4,15 +4,17 @@ using UnityEngine;
 using System;
 
 [Serializable]//to debug in inspector
-public struct PathPoint
+public class PathPoint
 {
 	public enum PointType
     {
         POINT,
         GIFT,
-        HOUSE
+        HOUSE,
     }
 	public Vector3 position;
     public PointType pointType;
     public GameObject targettedObject;
+    public PathPoint nextPathPoint;
+    public PathPoint previousPathPoint;
 }

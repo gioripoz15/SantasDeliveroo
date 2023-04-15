@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,15 @@ public class Santa : MonoBehaviour
         }
     }
     private List<PathPoint> pathPoints = new List<PathPoint>();
+    public List<PathPoint> PathPoints => pathPoints;
+
     private List<Gift> gifts = new List<Gift>();
 
     [SerializeField]
     private float lookAtSpeed;
+
+    public Action<PathPoint> pointRemovedFromList;
+    public Action<PathPoint> pointAddedToList;
 
     private void Start()
     {
@@ -29,11 +35,18 @@ public class Santa : MonoBehaviour
 
     public void AddPathPoint(PathPoint point)
     {
+        if(pathPoints.Count > 0)
+        {
+            pathPoints[pathPoints.Count-1].nextPathPoint = point;
+            point.previousPathPoint = pathPoints[pathPoints.Count - 1];
+        }
         pathPoints.Add(point);
+        pointAddedToList?.Invoke(point);
     }
     public void AddNewPath(PathPoint point)
     {
-        pathPoints = new List<PathPoint> { point };
+        pathPoints = new List<PathPoint> {point };
+        pointAddedToList?.Invoke(point);
     }
 
     private IEnumerator cMove()
@@ -102,6 +115,7 @@ public class Santa : MonoBehaviour
                 TryDeliverToHouse(point.targettedObject);
                 break;
         }
+        pointRemovedFromList?.Invoke(point);
         pathPoints.Remove(point);
     }
 

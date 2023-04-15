@@ -11,11 +11,11 @@ public class InputManager : Singleton<InputManager>
 {
 
     [SerializeField]
-    InputActionProperty leftClick;
+    private InputActionProperty leftClick;
     [SerializeField]
-    InputActionProperty rightClick;
+    private InputActionProperty rightClick;
     [SerializeField]
-    InputActionProperty CTRLClick;
+    private InputActionProperty CTRLClick;
     private bool ctrlPressed;
 
     private void Start()

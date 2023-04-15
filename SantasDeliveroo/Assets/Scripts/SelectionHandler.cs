@@ -17,7 +17,9 @@ public class SelectionHandler : Singleton<SelectionHandler>
         {
             if(value != null && value != selectedSanta)
             {
+                selectedSanta = value;
                 SantaSelected?.Invoke(value);
+                return;
             }
             selectedSanta = value;
         }
