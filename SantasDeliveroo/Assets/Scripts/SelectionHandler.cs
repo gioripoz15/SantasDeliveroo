@@ -21,6 +21,10 @@ public class SelectionHandler : Singleton<SelectionHandler>
                 SantaSelected?.Invoke(value);
                 return;
             }
+            if(value == null)
+            {
+                Deselect();
+            }
             selectedSanta = value;
         }
 	}

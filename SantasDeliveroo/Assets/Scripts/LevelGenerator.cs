@@ -14,11 +14,11 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField]
     private Vector2Int giftSpawnArea = Vector2Int.zero;
-
     
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = new Color(0,0,1,0.2f);
         Gizmos.DrawCube(transform.position, new Vector3(giftSpawnArea.x, 0, giftSpawnArea.y));
     }
 

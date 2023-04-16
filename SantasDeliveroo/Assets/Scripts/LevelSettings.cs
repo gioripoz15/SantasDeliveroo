@@ -11,6 +11,8 @@ public class LevelSettings : ScriptableObject
     public int houseAmount;
     public LevelEntitySettings santasSettings;
     public LevelEntitySettings befanasSettings;
+    public Vector3 playArea;
+    public Vector3 playAreaCenter;
 
     [Serializable]
     public struct LevelEntitySettings

@@ -9,6 +9,7 @@ public class UIPointMarker : MonoBehaviour
     private Image circle;
     [SerializeField]
     private Image arrow;
+    public Image Arrow => arrow;
 
     public Vector3 EndLinePoint
     {

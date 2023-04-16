@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Santa : MonoBehaviour
 {
@@ -33,10 +34,26 @@ public class Santa : MonoBehaviour
         StartCoroutine(cMove());
     }
 
+    public void StopCorutines()
+    {
+        StopAllCoroutines();
+    }
+
     public void AddPathPoint(PathPoint point)
     {
         if(pathPoints.Count > 0)
         {
+            if(point.pointType == PathPoint.PointType.GIFT)
+            {
+                foreach(var p in pathPoints)
+                {
+                    if(p.targettedObject == point.targettedObject)
+                    {
+                        Debug.Log("Point Already Added");
+                        return;
+                    }
+                } 
+            }
             pathPoints[pathPoints.Count-1].nextPathPoint = point;
             point.previousPathPoint = pathPoints[pathPoints.Count - 1];
         }
@@ -76,7 +93,8 @@ public class Santa : MonoBehaviour
                     StartCoroutine(cSmoothLookAt(pathPoints[0].position));
                 }
                 transform.position = Vector3.Lerp(startPosition, pathPoints[0].position, lerpTime);
-                lerpTime += (Time.deltaTime * speed/ distance);
+                lerpTime += (Time.deltaTime * ProcessedSpeed / distance);
+
                 //if lerpo is 1 it means it reached the position
                 if(lerpTime > 1)
                 {

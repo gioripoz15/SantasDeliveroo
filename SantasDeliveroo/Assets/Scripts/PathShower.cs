@@ -10,7 +10,7 @@ public class PathShower : MonoBehaviour
     [SerializeField]
     private UIPointMarker markerPrefab;
     [SerializeField]
-    private Image linePrefab;
+    private LineRenderer linePrefab;
 
     [SerializeField]
     private Color currentActionColor;
@@ -44,6 +44,7 @@ public class PathShower : MonoBehaviour
         if (show)
         {
             UpdateSantaMarker();
+            UpdateLine();
         }
     }
 
@@ -114,25 +115,42 @@ public class PathShower : MonoBehaviour
         currentMarker.transform.parent = transform;
 
         currentMarkerRectTransform.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, point.position) - canvas.sizeDelta / 2;
-        Image line = CreateLine(previousPoint.position, point.position);
+        
 
         currentMarker.SetColor(!previousPoint.targettedObject ? currentActionColor : plannedActionColor);
-        line.color = !previousPoint.targettedObject ? currentActionColor : plannedActionColor;
+        
         pointObjects.Add(currentMarker.gameObject);
-        pointObjects.Add(line.gameObject);
+        
         if (!previousPoint.targettedObject)
         {
             //to roundSanta
-            currentMarker = Instantiate(markerPrefab);
-            currentMarkerRectTransform = currentMarker.GetComponent<RectTransform>();
-            currentMarker.transform.parent = transform;
-            currentMarkerRectTransform.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Camera.main,
+            UIPointMarker santaMarker = Instantiate(markerPrefab);
+            RectTransform currentSantaMarkerRectTransform = santaMarker.GetComponent<RectTransform>();
+            santaMarker.transform.parent = transform;
+            currentSantaMarkerRectTransform.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Camera.main,
                 SelectionHandler.Instance.SelectedSanta.transform.position) - canvas.sizeDelta / 2;
-            selectedSantaMarker = currentMarkerRectTransform;
-            currentMarker.SetColor(currentActionColor);
-            currentMarker.DisableArrow();
+            selectedSantaMarker = currentSantaMarkerRectTransform;
+            santaMarker.SetColor(currentActionColor);
+            santaMarker.DisableArrow();
             //pointObjects.Add(currentMarker.gameObject);
+            previousPoint.position = SelectionHandler.Instance.SelectedSanta.transform.position;
         }
+        RectTransform lookAtRect = selectedSantaMarker;
+        if (pathObjects.TryGetValue(previousPoint, out List<GameObject> objects))
+        {
+            foreach (var obj in objects)
+            {
+                if (obj.TryGetComponent<UIPointMarker>(out UIPointMarker marker))
+                {
+                    lookAtRect = marker.GetComponent<RectTransform>();
+                    break;
+                }
+            }
+        }
+        LineRenderer line = CreateLine(previousPoint.position, point.position);
+        pointObjects.Add(line.gameObject);
+        line.material.color = !previousPoint.targettedObject ? currentActionColor : plannedActionColor;
+        UIYLookAt(currentMarkerRectTransform, lookAtRect);
 
         return pointObjects;
     }
@@ -148,19 +166,12 @@ public class PathShower : MonoBehaviour
         }
     }
 
-    private Image CreateLine(Vector3 startPoint, Vector3 endPoint)
+    private LineRenderer CreateLine(Vector3 pos1, Vector3 pos2)
     {
-        Image line = Instantiate(linePrefab);
+        LineRenderer line = Instantiate(linePrefab);
         line.transform.parent = transform;
-        Vector2 startPointCanvas = RectTransformUtility.WorldToScreenPoint(Camera.main, startPoint) - canvas.sizeDelta / 2;
-        Vector2 endPointCanvas = RectTransformUtility.WorldToScreenPoint(Camera.main, endPoint) - canvas.sizeDelta;
-        Vector2 direction = startPointCanvas - endPointCanvas;
-        float distance = direction.magnitude;
-        line.transform.up = direction.normalized;
-        RectTransform lineRect = line.GetComponent<RectTransform>();
-        lineRect.anchoredPosition = direction / 2;
-        line.transform.localScale = new Vector3(line.transform.localScale.x, line.transform.localScale.y, line.transform.localScale.z);
-
+        line.SetPosition(0, pos1);
+        line.SetPosition(1, pos2);
         return line;
     }
 
@@ -172,6 +183,10 @@ public class PathShower : MonoBehaviour
             foreach (var img in images)
             {
                 img.color = point.previousPathPoint != null ? plannedActionColor : currentActionColor;
+            }
+            if(go.TryGetComponent(out LineRenderer line))
+            {
+                line.material.color = point.previousPathPoint != null ? plannedActionColor : currentActionColor;
             }
         }
     }
@@ -195,6 +210,30 @@ public class PathShower : MonoBehaviour
             SelectionHandler.Instance.SelectedSanta.transform.position) - canvas.sizeDelta / 2;
 
         //updateOther?
+    }
+
+    private void UpdateLine()
+    {
+
+        foreach (var point in pathObjects)
+        {
+            if(point.Key.previousPathPoint == null)
+            {
+                foreach(var p in point.Value)
+                {
+                    if(p.TryGetComponent(out LineRenderer line))
+                    {
+                        line.SetPosition(0, SelectionHandler.Instance.SelectedSanta.transform.position);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void UIYLookAt(RectTransform rect, RectTransform target)
+    {
+        rect.up = (rect.position - target.position).normalized;
     }
 
 }

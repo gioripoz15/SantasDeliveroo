@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayCamera : MonoBehaviour
 {
-    private enum CameraType
+    public enum CameraType
     {
         TACTICAL,
         FREE,
@@ -40,8 +41,11 @@ public class PlayCamera : MonoBehaviour
     private float rotationX;
     private float rotationLimit = 89;
 
+    public Action<CameraType> typeChanged;
+
     private void Start()
     {
+        LevelManager.Instance.mainCamera = this;
         cameraMove.action.performed += ReadMoveValue;
         cameraMove.action.canceled += ReadMoveValue;
         sapceBar.action.performed += ReadSpacebar;
@@ -110,6 +114,7 @@ public class PlayCamera : MonoBehaviour
         {
             cameraType = CameraType.FREE;
         }
+        typeChanged?.Invoke(cameraType);
         UI.SetActive(cameraType == CameraType.TACTICAL);
     }
 

@@ -27,6 +27,7 @@ public class BefanaHandler : MonoBehaviour
             Befana newBefana = (Instantiate(befanasSettings.prefab)).GetComponent<Befana>();
             newBefana.speed = befanasSettings.speed;
             newBefana.transform.position = GetRandomSpawnPoint();
+            newBefana.SetAreaDatas(LevelManager.Instance.Settings.playArea, LevelManager.Instance.Settings.playAreaCenter);
             befanaList.Add(newBefana);
         }
     }

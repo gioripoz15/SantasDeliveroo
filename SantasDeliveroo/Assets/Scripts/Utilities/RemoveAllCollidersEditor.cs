@@ -17,23 +17,29 @@ public class RemoveAllCollidersEditor : EditorWindow
 
    void Remove()
     {
-        foreach(var col in colliderfather.GetComponentsInChildren<Collider>())
+        int count = 0;
+        foreach (var col in colliderfather.GetComponentsInChildren<Collider>())
         {
             DestroyImmediate(col);
+            count++;
         }
+        Debug.Log($"removed {count} colliders");
     }
 
     void AddBoxColliderToAllRenderer()
     {
         Remove();
         var childList = colliderfather.GetComponentsInChildren<Transform>();
+        int count = 0;
         for (int i = 0; i < childList.Length; i++)
         {
             if (childList[i].gameObject.GetComponent<MeshRenderer>())
             {
                 childList[i].gameObject.AddComponent<BoxCollider>();
+                count++;
             }
         }
+        Debug.Log($"Added {count} colliders");
     }
 
     private void OnGUI()

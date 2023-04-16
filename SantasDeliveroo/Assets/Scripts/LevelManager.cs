@@ -6,12 +6,19 @@ public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField]
     private LevelSettings settings;
+    public LevelSettings Settings => settings;
 
     private SantaHandler santaHandler;
     private BefanaHandler befanaHandler;
 
     [SerializeField]
+    private BoxCollider jail;
+    public BoxCollider Jail => jail;
+
+    [SerializeField]
     private LevelGenerator levelGenerator;
+
+    public PlayCamera mainCamera;
 
     private void Start()
     {
@@ -28,6 +35,8 @@ public class LevelManager : Singleton<LevelManager>
             Gizmos.DrawCube(settings.santasSettings.spawnAreaCenter, settings.santasSettings.spawnArea);
             Gizmos.color = new Color(1, 0, 0, 0.5f);
             Gizmos.DrawCube(settings.befanasSettings.spawnAreaCenter, settings.befanasSettings.spawnArea);
+            Gizmos.color = new Color(1, 1, 1, 0.2f);
+            Gizmos.DrawCube(settings.playAreaCenter, settings.playArea);
         }
     }
 
