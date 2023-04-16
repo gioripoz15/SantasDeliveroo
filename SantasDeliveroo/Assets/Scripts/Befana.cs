@@ -64,7 +64,8 @@ public class Befana : MonoBehaviour
         santa.StopCorutines();
         var jail = LevelManager.Instance.Jail;
         santa.transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
-        santa.transform.eulerAngles = new Vector3(0, santa.transform.eulerAngles.y, 0); 
+        santa.transform.eulerAngles = new Vector3(0, santa.transform.eulerAngles.y, 0);
+        LevelManager.Instance.SantaHandler.RemoveSanta(santa);
     }
 
     private IEnumerator cFollow(Transform santa)

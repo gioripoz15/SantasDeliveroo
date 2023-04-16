@@ -23,7 +23,7 @@ public class SelectionHandler : Singleton<SelectionHandler>
             }
             if(value == null)
             {
-                Deselect();
+                Deselect?.Invoke();
             }
             selectedSanta = value;
         }
@@ -41,6 +41,12 @@ public class SelectionHandler : Singleton<SelectionHandler>
             if (value != null && value != selectedGift)
             {
                 GiftSelected?.Invoke(value);
+                value?.HighlightTargetHouse(true);
+            }
+            if (value == null)
+            {
+                selectedGift?.HighlightTargetHouse(false);
+                Deselect?.Invoke();
             }
             selectedGift = value;
         }

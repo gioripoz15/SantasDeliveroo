@@ -177,6 +177,7 @@ public class PathShower : MonoBehaviour
 
     private void UpdatePoint(PathPoint point)
     {
+        if (!pathObjects.ContainsKey(point)) return;
         foreach (var go in pathObjects[point])
         {
             var images = go.GetComponentsInChildren<Image>();

@@ -22,12 +22,15 @@ public class Santa : MonoBehaviour
     public List<PathPoint> PathPoints => pathPoints;
 
     private List<Gift> gifts = new List<Gift>();
-
+    public List<Gift> Gifts => gifts;
     [SerializeField]
     private float lookAtSpeed;
 
     public Action<PathPoint> pointRemovedFromList;
     public Action<PathPoint> pointAddedToList;
+
+    public Action<Gift> pickedUpGift;
+    public Action<Gift> deliveredGift;
 
     private void Start()
     {
@@ -145,16 +148,18 @@ public class Santa : MonoBehaviour
             gifts.Add(gift);
             gift.Owner = this;
             gift.PickUpGameobject();
+            pickedUpGift?.Invoke(gift);
         }
     }
 
     private void TryDeliverToHouse(GameObject house)
     {
-        foreach(var g in gifts)
+        foreach(var gift in gifts)
         {
-            if(g.TargetHouse && g.TargetHouse == house)
+            if(gift.TargetHouse && gift.TargetHouse == house)
             {
                 //DoSomething
+                deliveredGift?.Invoke(gift);
             }
         }
     }

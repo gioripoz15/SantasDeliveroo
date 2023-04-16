@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Gioripoz;
+using System;
+
 public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField]
@@ -9,6 +11,7 @@ public class LevelManager : Singleton<LevelManager>
     public LevelSettings Settings => settings;
 
     private SantaHandler santaHandler;
+    public SantaHandler SantaHandler => santaHandler;
     private BefanaHandler befanaHandler;
 
     [SerializeField]
@@ -20,11 +23,22 @@ public class LevelManager : Singleton<LevelManager>
 
     public PlayCamera mainCamera;
 
+    public List<Santa> Santas
+    {
+        get
+        {
+            return santaHandler.Santas;
+        }
+    }
+
+    public Action finishCreation;
+
     private void Start()
     {
         CreateSantas();
         CreateBefanas();
         CreateLevel();
+        finishCreation?.Invoke();
     }
 
     private void OnDrawGizmosSelected()

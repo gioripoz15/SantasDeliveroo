@@ -12,4 +12,9 @@ public class Gift : MonoBehaviour
 		//play some audio/particles;
 		gameObject.SetActive(false);
     }
+
+	public void HighlightTargetHouse(bool highlight)
+    {
+
+    }
 }
