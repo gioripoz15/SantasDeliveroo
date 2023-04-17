@@ -32,6 +32,11 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     public Action finishCreation;
+    public bool hasFinishedCreation = false;
+
+    private int deliveredGifts = 0;
+    private float timer;
+    public float Timer => timer;
 
     private void Start()
     {
@@ -39,6 +44,7 @@ public class LevelManager : Singleton<LevelManager>
         CreateBefanas();
         CreateLevel();
         finishCreation?.Invoke();
+        hasFinishedCreation = true;
     }
 
     private void OnDrawGizmosSelected()
@@ -68,5 +74,13 @@ public class LevelManager : Singleton<LevelManager>
     private void CreateLevel()
     {
         levelGenerator.GenerateLevel(settings.houseAmount,settings.giftsAmount);
+    }
+
+    public void SantaDeliveredAGift(Santa santa, Gift gift)
+    {
+        if(santa && gift)
+        {
+            deliveredGifts++;
+        }
     }
 }

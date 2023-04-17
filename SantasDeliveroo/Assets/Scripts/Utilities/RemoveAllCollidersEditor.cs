@@ -28,7 +28,7 @@ public class RemoveAllCollidersEditor : EditorWindow
 
     void AddBoxColliderToAllRenderer()
     {
-        Remove();
+        //Remove();
         var childList = colliderfather.GetComponentsInChildren<Transform>();
         int count = 0;
         for (int i = 0; i < childList.Length; i++)
@@ -42,6 +42,35 @@ public class RemoveAllCollidersEditor : EditorWindow
         Debug.Log($"Added {count} colliders");
     }
 
+    void AddBoxColliderToAllRendererFather()
+    {
+        //Remove();
+        var childList = colliderfather.GetComponentsInChildren<Transform>();
+        int count = 0;
+        for (int i = 0; i < childList.Length; i++)
+        {
+            if (childList[i].gameObject.GetComponent<MeshRenderer>())
+            {
+                if (childList[i].parent != colliderfather)
+                {
+                    var childcoll = childList[i].gameObject.AddComponent<BoxCollider>();
+                    var parentcoll = childList[i].parent.gameObject.AddComponent<BoxCollider>();
+                    Vector3 scale = parentcoll.size;
+                    scale.x = childcoll.size.x * childcoll.transform.localScale.x;
+                    scale.y = childcoll.size.y * childcoll.transform.localScale.y;
+                    scale.z = childcoll.size.z * childcoll.transform.localScale.z;
+                    parentcoll.size = scale;
+                    parentcoll.center = childcoll.center + childcoll.transform.position;
+                    DestroyImmediate(childcoll);
+                    count++;
+                }
+                
+            }
+        }
+        Debug.Log($"Added {count} colliders");
+    }
+
+
     private void OnGUI()
     {
         colliderfather = (GameObject)EditorGUILayout.ObjectField(colliderfather, typeof(GameObject));
@@ -52,6 +81,10 @@ public class RemoveAllCollidersEditor : EditorWindow
         if (GUILayout.Button("AddBoxToAll"))
         {
             AddBoxColliderToAllRenderer();
+        }
+        if (GUILayout.Button("AddBoxToAllFathers"))
+        {
+            AddBoxColliderToAllRendererFather();
         }
     }
 }

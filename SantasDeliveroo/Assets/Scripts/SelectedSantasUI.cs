@@ -13,14 +13,30 @@ public class SelectedSantasUI : MonoBehaviour
     [SerializeField]
     private GiftUIInfo giftUIObject;
 
+
+    private Santa clickedSanta;
+
     private void Start()
     {
-        LevelManager.Instance.finishCreation += () =>
+        if (!LevelManager.Instance.hasFinishedCreation)
         {
-            UpdateSantasList();
-            SubscribeToAllSantaGiftChange();
-            LevelManager.Instance.SantaHandler.RemovedSanta += (Santa santa) => UpdateSantasList();
-        };
+            LevelManager.Instance.finishCreation += () =>
+            {
+                Initialize();
+            };
+        }
+        else
+        {
+            Initialize();
+        }
+        
+    }
+
+    private void Initialize()
+    {
+        UpdateSantasList();
+        SubscribeToAllSantaGiftChange();
+        LevelManager.Instance.SantaHandler.RemovedSanta += (Santa santa) => UpdateSantasList();
     }
 
     private void SubscribeToAllSantaGiftChange()
@@ -43,6 +59,7 @@ public class SelectedSantasUI : MonoBehaviour
                 Destroy(santaUIContainer.GetChild(i).gameObject);
             }
         }
+        ClearGiftList();
         List<Santa> santas = LevelManager.Instance.Santas;
         foreach (Santa santa in santas)
         {
@@ -51,11 +68,13 @@ public class SelectedSantasUI : MonoBehaviour
             currentSantaInfo.referredSanta = santa;
             currentSantaInfo.santaSelected += SelectSanta;
         }
-        ClearGiftList();
+        SelectSanta(clickedSanta);
     }
 
     private void SelectSanta(Santa santa)
     {
+        if (!santa) return;
+        clickedSanta = santa;
         SelectionHandler.Instance.SelectedSanta = santa;
         ShowGiftsInfos(santa);
     }
@@ -80,6 +99,7 @@ public class SelectedSantasUI : MonoBehaviour
 
             GiftUIInfo currentGiftInfo = Instantiate(giftUIObject);
             currentGiftInfo.transform.parent = giftUIContainer;
+            currentGiftInfo.referredGift = gift;
             currentGiftInfo.giftSelected += SelectGift;
         }
     }

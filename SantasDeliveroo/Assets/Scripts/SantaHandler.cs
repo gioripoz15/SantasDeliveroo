@@ -59,6 +59,7 @@ public class SantaHandler : MonoBehaviour
             Santa newSanta = (Instantiate(santasSettings.prefab)).GetComponent<Santa>();
             newSanta.speed = santasSettings.speed;
             newSanta.transform.position = GetRandomSpawnPoint();
+            newSanta.transform.parent = transform;
             santas.Add(newSanta);
         }
     }

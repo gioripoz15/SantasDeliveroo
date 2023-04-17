@@ -154,13 +154,23 @@ public class Santa : MonoBehaviour
 
     private void TryDeliverToHouse(GameObject house)
     {
+        List<Gift> giftsToRemove = new List<Gift>();
         foreach(var gift in gifts)
         {
+            house = house.GetComponentInChildren<Collider>().gameObject;
             if(gift.TargetHouse && gift.TargetHouse == house)
             {
                 //DoSomething
-                deliveredGift?.Invoke(gift);
+                LevelManager.Instance.SantaDeliveredAGift(this, gift);
+                gift.HighlightTargetHouse(false);
+                giftsToRemove.Add(gift);
             }
+        }
+        foreach(var gift in giftsToRemove)
+        {
+            gifts.Remove(gift);
+            Destroy(gift.gameObject);
+            deliveredGift?.Invoke(gift);
         }
     }
     

@@ -33,6 +33,8 @@ public class InputManager : Singleton<InputManager>
         RaycastHit[] hits = Physics.RaycastAll(ray);
         foreach (var hit in hits)
         {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI")) continue;
+
             Santa santa = hit.collider.gameObject.GetComponent<Santa>();
 
             if (santa)
@@ -48,6 +50,7 @@ public class InputManager : Singleton<InputManager>
                 {
                     Gift clickedGift = gift.gameObject.GetComponent<Gift>();
                     SelectionHandler.Instance.SelectedGift = clickedGift;
+                    break;
                 }
                 else
                 {
@@ -65,6 +68,7 @@ public class InputManager : Singleton<InputManager>
         PathPoint pathPoint = new PathPoint();
         foreach (var hit in hits)
         {
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI")) break; ;
 
             Gift gift = hit.collider.gameObject.GetComponent<Gift>();
             if (gift)
@@ -78,6 +82,10 @@ public class InputManager : Singleton<InputManager>
             else
             {
                 House house = hit.collider.gameObject.GetComponent<House>();
+                if (!house)
+                {
+                    house = hit.collider.transform.parent?.gameObject.GetComponentInParent<House>();
+                }
                 if (house)
                 {
 
@@ -85,6 +93,7 @@ public class InputManager : Singleton<InputManager>
                     pathPoint.position = hit.point;
                     pathPoint.targettedObject = clickedHouse.gameObject;
                     pathPoint.pointType = PathPoint.PointType.HOUSE;
+
                 }
                 else
                 {

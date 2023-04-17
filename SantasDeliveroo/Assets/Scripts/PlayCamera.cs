@@ -27,6 +27,8 @@ public class PlayCamera : MonoBehaviour
     private InputActionProperty cameraMove;
     [SerializeField]
     private InputActionProperty sapceBar;
+    [SerializeField]
+    private InputActionProperty pov;
 
     [SerializeField]
     private float speed;
@@ -39,7 +41,7 @@ public class PlayCamera : MonoBehaviour
     private Vector2 moveValue = Vector2.zero;
 
     private float rotationX;
-    private float rotationLimit = 89;
+    private float rotationLimit = 89.8f;
 
     public Action<CameraType> typeChanged;
 
@@ -49,6 +51,7 @@ public class PlayCamera : MonoBehaviour
         cameraMove.action.performed += ReadMoveValue;
         cameraMove.action.canceled += ReadMoveValue;
         sapceBar.action.performed += ReadSpacebar;
+        pov.action.performed += TryPOV;
     }
 
     private void LateUpdate()
@@ -57,6 +60,10 @@ public class PlayCamera : MonoBehaviour
         {
             MovePostion();
             MoveRotation();
+        }
+        if(cameraType == CameraType.POV)
+        {
+            Follow(SelectionHandler.Instance.SelectedSanta.transform);
         }
     }
 
@@ -72,10 +79,10 @@ public class PlayCamera : MonoBehaviour
 
         //applying mouse rotation
         // always rotate Y in global world space to avoid gimbal lock
-        
+
         rotationX += rotationVertical;
         rotationX = Mathf.Clamp(rotationX, -rotationLimit, rotationLimit);
-        transform.Rotate(Vector3.up * rotationHorizontal / ((Mathf.Abs(rotationX)/rotationLimit)+1)/2, Space.World);
+        transform.Rotate(Vector3.up * rotationHorizontal / ((Mathf.Abs(rotationX) / rotationLimit) + 1) / 2, Space.World);
 
         var rotationY = transform.localEulerAngles.y;
 
@@ -93,7 +100,7 @@ public class PlayCamera : MonoBehaviour
         float timer = 0;
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
-        for(; timer <= postionMoveTime; )
+        for (; timer <= postionMoveTime;)
         {
             transform.position = Vector3.Lerp(startPosition, target.position, (timer / postionMoveTime));
             transform.rotation = Quaternion.Lerp(startRotation, target.rotation, (timer / postionMoveTime));
@@ -102,9 +109,16 @@ public class PlayCamera : MonoBehaviour
         }
     }
 
+    private void Follow(Transform target)
+    {
+        transform.position = target.position;
+        transform.rotation = target.rotation;
+    }
+
 
     private void ReadSpacebar(CallbackContext ctx)
     {
+        StopAllCoroutines();
         if (cameraType != CameraType.TACTICAL)
         {
             SetCameraPosition(tacticalViewPoint);
@@ -113,9 +127,21 @@ public class PlayCamera : MonoBehaviour
         else
         {
             cameraType = CameraType.FREE;
+            rotationX = -transform.eulerAngles.x;
+
         }
         typeChanged?.Invoke(cameraType);
         UI.SetActive(cameraType == CameraType.TACTICAL);
+    }
+
+    private void TryPOV(CallbackContext ctx)
+    {
+        if (SelectionHandler.Instance.SelectedSanta)
+        {
+            cameraType = CameraType.POV;
+            UI.SetActive(cameraType == CameraType.TACTICAL);
+        }
+
     }
 
     private void ReadMoveValue(CallbackContext ctx)

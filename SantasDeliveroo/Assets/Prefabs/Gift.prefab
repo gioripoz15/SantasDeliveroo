@@ -49,6 +49,9 @@ MonoBehaviour:
   TargetHouse: {fileID: 0}
   Owner: {fileID: 0}
   highlightMaterial: {fileID: 2100000, guid: 7108fa4046be98240a76650fce6dbd4f, type: 2}
+  linePrefab: {fileID: 3352608110156062592, guid: abb1851e937f3f441b507bf27f8cc40a, type: 3}
+  model: {fileID: 5699656664883902169}
+  collider: {fileID: 7665454952550428881}
 --- !u!65 &7665454952550428881
 BoxCollider:
   m_ObjectHideFlags: 0

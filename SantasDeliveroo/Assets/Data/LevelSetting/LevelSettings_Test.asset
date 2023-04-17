@@ -23,7 +23,7 @@ MonoBehaviour:
   befanasSettings:
     prefab: {fileID: 1379165798997424665, guid: b05def3bceb0f284db069683d34c5c98, type: 3}
     amount: 3
-    speed: 25
+    speed: 0
     spawnArea: {x: 116.32, y: 0, z: 75.7}
     spawnAreaCenter: {x: -106.3, y: 35, z: 64.6}
   playArea: {x: 444.46, y: 0, z: 424.4}
