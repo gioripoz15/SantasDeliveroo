@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetHouse: {fileID: 0}
   Owner: {fileID: 0}
+  highlightMaterial: {fileID: 2100000, guid: 7108fa4046be98240a76650fce6dbd4f, type: 2}
 --- !u!65 &7665454952550428881
 BoxCollider:
   m_ObjectHideFlags: 0

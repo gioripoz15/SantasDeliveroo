@@ -41,6 +41,10 @@ public class SelectionHandler : Singleton<SelectionHandler>
             if (value != null && value != selectedGift)
             {
                 GiftSelected?.Invoke(value);
+                if (selectedGift)
+                {
+                    selectedGift?.HighlightTargetHouse(false);
+                }
                 value?.HighlightTargetHouse(true);
             }
             if (value == null)
