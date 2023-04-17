@@ -51,6 +51,7 @@ public class LevelGenerator : MonoBehaviour
     private void SpawnGifts(int amount)
     {
         gifts.Clear();
+        GameObject giftContainer = new GameObject("GiftContainer");
         for (int i = 0; i < amount; i++)
         {
             Gift currentGift = Instantiate(giftPrefab);
@@ -59,7 +60,7 @@ public class LevelGenerator : MonoBehaviour
                 transform.position.y,
                 Random.Range(-giftSpawnArea.y/2 + transform.position.z, giftSpawnArea.y/2 + transform.position.z)
                 );
-
+            currentGift.transform.parent = giftContainer.transform;
             gifts.Add(currentGift);
             
         }
