@@ -134,6 +134,14 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
+    public void SantaRemoved(Santa santa)
+    {
+        if (Santas.Count == 0)
+        {
+            GameFinished(false);
+        }
+    }
+
     private void GameFinished(bool win)
     {
         StartCoroutine(cEndGame());

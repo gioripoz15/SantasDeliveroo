@@ -50,6 +50,10 @@ public class SantaHandler : MonoBehaviour
     {
         Santas.Remove(santa);
         RemovedSanta?.Invoke(santa);
+        if(Santas.Count == 0)
+        {
+            LevelManager.Instance.SantaRemoved(santa);
+        }
     }
     
     private void GenerateSantas()
