@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gift : MonoBehaviour
 {
-    public GameObject TargetHouse;
+    public GameObject targetHouse;
     public Santa Owner;
     [SerializeField]
     private Material highlightMaterial;
@@ -29,29 +29,18 @@ public class Gift : MonoBehaviour
     {
         if (add)
         {
-            Highlight highlight = TargetHouse.GetComponent<Highlight>();
+            Highlight highlight = targetHouse.GetComponent<Highlight>();
             if (highlight) return;
 
-            highlight = TargetHouse.AddComponent<Highlight>();
+            highlight = targetHouse.AddComponent<Highlight>();
             highlight.highlightMaterial = highlightMaterial;
             highlight.RecurseHighlight();
-            if (!currentLine)
-            {
-                currentLine = Instantiate(linePrefab);
-                //currentLine.transform.parent = transform;
-            }
-            Vector3 startPosition = transform.position;
-            if (Owner)
-            {
-                startPosition = Owner.transform.position;
-            }
-            currentLine.SetPosition(0, startPosition);
-            currentLine.SetPosition(1, TargetHouse.transform.position);
+            SetLineRenderer();
 
         }
         else
         {
-            Highlight highlight = TargetHouse?.GetComponent<Highlight>();
+            Highlight highlight = targetHouse?.GetComponent<Highlight>();
             if (highlight)
             {
                 highlight.RemoveHighlight();
@@ -61,5 +50,21 @@ public class Gift : MonoBehaviour
                 Destroy(currentLine.gameObject);
             }
         }
+    }
+
+    public void SetLineRenderer()
+    {
+        if (!currentLine)
+        {
+            currentLine = Instantiate(linePrefab);
+            //currentLine.transform.parent = transform;
+        }
+        Vector3 startPosition = transform.position;
+        if (Owner)
+        {
+            startPosition = Owner.transform.position;
+        }
+        currentLine.SetPosition(0, startPosition);
+        currentLine.SetPosition(1, targetHouse.transform.position);
     }
 }

@@ -9,6 +9,11 @@ public class Befana : MonoBehaviour
     private Vector3 patrollingArea = Vector3.zero;
     private Vector3 patrollingAreaCenter = Vector3.zero;
 
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip caughtClip;
+
     private void Start()
     {
         StartCoroutine(cPatrol());
@@ -48,6 +53,7 @@ public class Befana : MonoBehaviour
             var jail = LevelManager.Instance.Jail;
             transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
             StopAllCoroutines();
+            PlayCaughtAudio(caughtClip);
             Destroy(this);
         }
     }
@@ -110,5 +116,10 @@ public class Befana : MonoBehaviour
         point.y = Random.Range(center.y - (area.y / 2), center.y + (area.y / 2));
         point.z = Random.Range(center.z - (area.z / 2), center.z + (area.z / 2));
         return point;
+    }
+
+    private void PlayCaughtAudio(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

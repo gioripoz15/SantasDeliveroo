@@ -40,7 +40,14 @@ public class Santa : MonoBehaviour
 
     public Action<Gift> pickedUpGift;
     public Action<Gift> deliveredGift;
-   
+
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip pickUpClip;
+    [SerializeField]
+    private AudioClip deliverClip;
 
     private void Start()
     {
@@ -161,6 +168,7 @@ public class Santa : MonoBehaviour
             gift.Owner = this;
             gift.PickUpGameobject();
             pickedUpGift?.Invoke(gift);
+            PlayAudio(pickUpClip);
         }
     }
 
@@ -170,7 +178,7 @@ public class Santa : MonoBehaviour
         foreach(var gift in gifts)
         {
             house = house.GetComponentInChildren<Collider>().gameObject;
-            if(gift.TargetHouse && gift.TargetHouse == house)
+            if(gift.targetHouse && gift.targetHouse == house)
             {
                 //DoSomething
                 LevelManager.Instance.SantaDeliveredAGift(this, gift);
@@ -183,7 +191,13 @@ public class Santa : MonoBehaviour
             gifts.Remove(gift);
             Destroy(gift.gameObject);
             deliveredGift?.Invoke(gift);
+            PlayAudio(deliverClip);
         }
     }
-    
+
+    private void PlayAudio(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+    }
+
 }

@@ -235,6 +235,10 @@ public class PathShower : MonoBehaviour
                 }
             }
         }
+        if (SelectionHandler.Instance.SelectedGift)
+        {
+            SelectionHandler.Instance.SelectedGift.SetLineRenderer();
+        }
     }
 
     private void UIYLookAt(RectTransform rect, RectTransform target)

@@ -45,7 +45,7 @@ public class LevelGenerator : MonoBehaviour
         foreach (var gift in gifts)
         {
             int randomHouseIndex = Random.Range(0, houses.Count - 1);
-            gift.TargetHouse = houses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
+            gift.targetHouse = houses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
             houses[randomHouseIndex].assignedGifts.Add(gift);
             if (houses[randomHouseIndex].assignedGifts.Count >= maxGiftPerHouse)
             {

@@ -26,7 +26,9 @@ public class LevelLauncher : MonoBehaviour
     private AnimationCurve difficultyCurve;*/
     [SerializeField]
     List<LevelSettings> levelSettingsList = new List<LevelSettings>();
-    
+
+    [SerializeField]
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -50,5 +52,18 @@ public class LevelLauncher : MonoBehaviour
         levelManager.SetLevelSetting(levelSettingsList[difficulty]);
         sceneLoader.sceneLoaded += levelManager.StartLevel;
         sceneLoader.LoadScene(levelSceneName);
+    }
+
+    public void LoadLevelSceneWithClip(AudioClip clip)
+    {
+        StartCoroutine(LoadLevelSceneAfterSound(clip));
+        
+    }
+
+    IEnumerator LoadLevelSceneAfterSound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
+        yield return new WaitUntil ( () => audioSource.isPlaying == false );
+        LoadLevelScene();
     }
 }
