@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strenght: 0.5
-  time: 4
+  time: 5
   localAxis: {x: 0, y: 1, z: 0}
   animationCurve:
     serializedVersion: 2
@@ -5447,7 +5447,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.25
-  m_Pitch: 1
+  m_Pitch: 1.5
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -6350,7 +6350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strenght: 0.5
   time: 4
-  localAxis: {x: 0, y: 1, z: 0}
+  localAxis: {x: 0.1, y: 1, z: 0}
   animationCurve:
     serializedVersion: 2
     m_Curve:
@@ -12453,59 +12453,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991919893}
   m_CullTransparentMesh: 1
---- !u!1 &2007773751 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3312274726564334358, guid: bd41d18e7f3f6c043869fd139d10f733, type: 3}
-  m_PrefabInstance: {fileID: 723671686}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2007773753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007773751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af1e709571182744ea9c82d914ec4d12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strenght: 0.5
-  time: 4
-  localAxis: {x: 0, y: 1, z: 0}
-  animationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0011177063
-      value: 0
-      inSlope: 2.0111027
-      outSlope: 2.0111027
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.49776724
-      value: 0.9988132
-      inSlope: 0.011579573
-      outSlope: 0.011579573
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.99664307
-      value: 0.0070762634
-      inSlope: -1.9879435
-      outSlope: -1.9879435
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1001 &2047982837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12516,6 +12463,10 @@ PrefabInstance:
     - target: {fileID: 2645969686924925638, guid: 4758b428641dc804691e53db1a955198, type: 3}
       propertyPath: m_Name
       value: Gift
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645969686924925638, guid: 4758b428641dc804691e53db1a955198, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2645969686924925640, guid: 4758b428641dc804691e53db1a955198, type: 3}
       propertyPath: m_RootOrder

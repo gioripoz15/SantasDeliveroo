@@ -63,7 +63,10 @@ public class PlayCamera : MonoBehaviour
         }
         if(cameraType == CameraType.POV)
         {
-            Follow(SelectionHandler.Instance.SelectedSanta.transform);
+            var target = SelectionHandler.Instance.SelectedSanta.POVTransform;
+            transform.rotation = target.rotation;
+            Follow(target);
+            MoveRotation();
         }
     }
 
@@ -112,7 +115,7 @@ public class PlayCamera : MonoBehaviour
     private void Follow(Transform target)
     {
         transform.position = target.position;
-        transform.rotation = target.rotation;
+        //transform.rotation = target.rotation;
     }
 
 

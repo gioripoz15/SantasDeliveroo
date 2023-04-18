@@ -49,6 +49,20 @@ public class Santa : MonoBehaviour
     [SerializeField]
     private AudioClip deliverClip;
 
+    [SerializeField]
+    private Transform POVtransform;
+    public Transform POVTransform
+    {
+        get
+        {
+            if (!POVtransform)
+            {
+                POVtransform = transform;
+            }
+            return POVtransform;
+        }
+    }
+
     private void Start()
     {
         light.color = lightColor;
