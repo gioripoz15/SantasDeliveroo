@@ -57,6 +57,10 @@ public class PathShower : MonoBehaviour
     private void Clear()
     {
         //cycle on dictionary
+        if (selectedSantaMarker)
+        {
+            Destroy(selectedSantaMarker.gameObject);
+        }
         foreach (var goList in pathObjects.Values)
         {
             foreach (var go in goList)
@@ -66,10 +70,7 @@ public class PathShower : MonoBehaviour
         }
         pathObjects.Clear();
         lastAddedPathPoint = new PathPoint();
-        if (selectedSantaMarker)
-        {
-            Destroy(selectedSantaMarker.gameObject);
-        }
+        
     }
 
     private void RemovePoint(PathPoint point)
@@ -101,6 +102,10 @@ public class PathShower : MonoBehaviour
         if (pathObjects.Count > 0)
         {
             previousPoint = lastAddedPathPoint;
+            if (point.previousPathPoint != null)
+            {
+                previousPoint = point.previousPathPoint;
+            }
         }
         pathObjects.Add(point, CreatePointObjects(previousPoint, point));
         lastAddedPathPoint = point;
@@ -121,7 +126,7 @@ public class PathShower : MonoBehaviour
         
         pointObjects.Add(currentMarker.gameObject);
         
-        if (!previousPoint.targettedObject)
+        if (!selectedSantaMarker)
         {
             //to roundSanta
             UIPointMarker santaMarker = Instantiate(markerPrefab);

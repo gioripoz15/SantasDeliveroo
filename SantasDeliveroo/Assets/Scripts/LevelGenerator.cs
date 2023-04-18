@@ -14,7 +14,22 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField]
     private Vector2Int giftSpawnArea = Vector2Int.zero;
-    
+
+    [SerializeField]
+    private BoxCollider jail;
+
+    public BoxCollider Jail
+    {
+        get { return jail; }
+    }
+
+    [SerializeField]
+    List<Color> santaColors = new List<Color>();
+
+    public List<Color> SantaColors
+    {
+        get { return santaColors; }
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -61,6 +76,7 @@ public class LevelGenerator : MonoBehaviour
                 Random.Range(-giftSpawnArea.y/2 + transform.position.z, giftSpawnArea.y/2 + transform.position.z)
                 );
             currentGift.transform.parent = giftContainer.transform;
+            currentGift.gameObject.SetActive(true);//idk why is disabled when spawned
             gifts.Add(currentGift);
             
         }

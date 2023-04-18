@@ -14,12 +14,24 @@ public class LevelManager : Singleton<LevelManager>
     public SantaHandler SantaHandler => santaHandler;
     private BefanaHandler befanaHandler;
 
-    [SerializeField]
-    private BoxCollider jail;
-    public BoxCollider Jail => jail;
+    public BoxCollider Jail
+    {
+        get
+        {
+            return levelGenerator.Jail;
+        }
+    }
 
     [SerializeField]
     private LevelGenerator levelGenerator;
+
+    public List<Color> SantaColors
+    {
+        get
+        {
+            return levelGenerator.SantaColors;
+        }
+    }
 
     public PlayCamera mainCamera;
 
@@ -35,16 +47,50 @@ public class LevelManager : Singleton<LevelManager>
     public bool hasFinishedCreation = false;
 
     private int deliveredGifts = 0;
+    public int DeliveredGifts
+    {
+        get
+        {
+            return deliveredGifts;
+        }
+    }
+
     private float timer;
     public float Timer => timer;
 
+    [SerializeField]
+    private SceneLoader sceneLoader;
+
     private void Start()
     {
+        DontDestroyOnLoad(this);
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= settings.timeLimit)
+        {
+            GameFinished(deliveredGifts >= settings.giftToWin);
+        }
+    }
+
+    public void StartLevel()
+    {
+        if (!levelGenerator)
+        {
+            levelGenerator = FindObjectOfType<LevelGenerator>();
+        }
         CreateSantas();
         CreateBefanas();
         CreateLevel();
         finishCreation?.Invoke();
         hasFinishedCreation = true;
+    }
+
+    public void SetLevelSetting(LevelSettings settings)
+    {
+        this.settings = settings;
     }
 
     private void OnDrawGizmosSelected()
@@ -82,5 +128,30 @@ public class LevelManager : Singleton<LevelManager>
         {
             deliveredGifts++;
         }
+        if(deliveredGifts >= settings.giftToWin)
+        {
+            GameFinished(true);
+        }
+    }
+
+    private void GameFinished(bool win)
+    {
+        StartCoroutine(cEndGame());
+    }
+
+    IEnumerator cEndGame()
+    {
+        //do stuff
+        //playfireworks
+        yield return null;
+        DestroyWord();
+    }
+
+    private void DestroyWord()
+    {
+        sceneLoader.LoadScene("MainScene");
+        sceneLoader.sceneLoaded -= StartLevel;
+        sceneLoader.sceneLoaded += () => Destroy(sceneLoader.gameObject);
+        Destroy(gameObject);
     }
 }

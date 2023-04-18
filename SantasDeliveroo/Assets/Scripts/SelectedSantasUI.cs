@@ -14,8 +14,6 @@ public class SelectedSantasUI : MonoBehaviour
     private GiftUIInfo giftUIObject;
 
 
-    private Santa clickedSanta;
-
     private void Start()
     {
         if (!LevelManager.Instance.hasFinishedCreation)
@@ -37,6 +35,7 @@ public class SelectedSantasUI : MonoBehaviour
         UpdateSantasList();
         SubscribeToAllSantaGiftChange();
         LevelManager.Instance.SantaHandler.RemovedSanta += (Santa santa) => UpdateSantasList();
+        SelectionHandler.Instance.SantaSelected += (Santa santa) => UpdateSantasList();
     }
 
     private void SubscribeToAllSantaGiftChange()
@@ -67,14 +66,15 @@ public class SelectedSantasUI : MonoBehaviour
             currentSantaInfo.transform.parent = santaUIContainer;
             currentSantaInfo.referredSanta = santa;
             currentSantaInfo.santaSelected += SelectSanta;
+            currentSantaInfo.SetColor();
         }
-        SelectSanta(clickedSanta);
+        SelectSanta(SelectionHandler.Instance.SelectedSanta);
     }
 
     private void SelectSanta(Santa santa)
     {
         if (!santa) return;
-        clickedSanta = santa;
+        SelectionHandler.Instance.SelectedSanta = santa;
         SelectionHandler.Instance.SelectedSanta = santa;
         ShowGiftsInfos(santa);
     }
@@ -101,6 +101,7 @@ public class SelectedSantasUI : MonoBehaviour
             currentGiftInfo.transform.parent = giftUIContainer;
             currentGiftInfo.referredGift = gift;
             currentGiftInfo.giftSelected += SelectGift;
+            currentGiftInfo.SetColor();
         }
     }
 

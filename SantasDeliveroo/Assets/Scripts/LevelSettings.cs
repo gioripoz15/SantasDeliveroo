@@ -7,6 +7,8 @@ using System;
 [CreateAssetMenu(fileName = "LevelSettings", menuName = "Deliveroo/LevelSettings", order = 1)]
 public class LevelSettings : ScriptableObject
 {
+    public int timeLimit;
+    public int giftToWin;
 	public int giftsAmount;
     public int houseAmount;
     public LevelEntitySettings santasSettings;

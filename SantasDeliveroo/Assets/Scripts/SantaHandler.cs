@@ -60,6 +60,7 @@ public class SantaHandler : MonoBehaviour
             newSanta.speed = santasSettings.speed;
             newSanta.transform.position = GetRandomSpawnPoint();
             newSanta.transform.parent = transform;
+            newSanta.lightColor = LevelManager.Instance.SantaColors[i% LevelManager.Instance.SantaColors.Count];
             santas.Add(newSanta);
         }
     }

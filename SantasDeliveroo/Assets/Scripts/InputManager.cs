@@ -31,6 +31,7 @@ public class InputManager : Singleton<InputManager>
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
+        bool deselect = false;
         foreach (var hit in hits)
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI")) continue;
@@ -41,6 +42,7 @@ public class InputManager : Singleton<InputManager>
             {
                 Santa clickedSanta = santa;
                 SelectionHandler.Instance.SelectedSanta = clickedSanta;
+                deselect = false;
                 break;
             }
             else
@@ -50,14 +52,19 @@ public class InputManager : Singleton<InputManager>
                 {
                     Gift clickedGift = gift.gameObject.GetComponent<Gift>();
                     SelectionHandler.Instance.SelectedGift = clickedGift;
+                    deselect = false;
                     break;
                 }
                 else
                 {
-                    SelectionHandler.Instance.DeselectAll();
+                    deselect = true;
                 }
 
             }
+        }
+        if (deselect)
+        {
+            SelectionHandler.Instance.DeselectAll();
         }
     }
     //move click

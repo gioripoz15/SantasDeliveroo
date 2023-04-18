@@ -23,17 +23,28 @@ public class Santa : MonoBehaviour
 
     private List<Gift> gifts = new List<Gift>();
     public List<Gift> Gifts => gifts;
+
+    [SerializeField]
+    private int maxGiftCanCarry = 3;
+
     [SerializeField]
     private float lookAtSpeed;
+
+    [SerializeField]
+    private Light light;
+
+    public Color lightColor;
 
     public Action<PathPoint> pointRemovedFromList;
     public Action<PathPoint> pointAddedToList;
 
     public Action<Gift> pickedUpGift;
     public Action<Gift> deliveredGift;
+   
 
     private void Start()
     {
+        light.color = lightColor;
         StartCoroutine(cMove());
     }
 
@@ -142,6 +153,7 @@ public class Santa : MonoBehaviour
 
     private void PickUpGift(GameObject giftObj)
     {
+        if (maxGiftCanCarry <= gifts.Count) return;
         Gift gift = giftObj.GetComponent<Gift>();
         if (gift && !gift.Owner)
         {

@@ -17,11 +17,6 @@ public class Gift : MonoBehaviour
     [SerializeField]
     private Collider collider;
 
-    private void OnDestroy()
-    {
-        HighlightTargetHouse(false);
-    }
-
     public void PickUpGameobject()
     {
         //play some audio/particles;
@@ -56,7 +51,7 @@ public class Gift : MonoBehaviour
         }
         else
         {
-            Highlight highlight = TargetHouse.GetComponent<Highlight>();
+            Highlight highlight = TargetHouse?.GetComponent<Highlight>();
             if (highlight)
             {
                 highlight.RemoveHighlight();
