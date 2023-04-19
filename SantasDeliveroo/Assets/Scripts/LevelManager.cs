@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gioripoz;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : Singleton<LevelManager>
 {
@@ -18,18 +19,30 @@ public class LevelManager : Singleton<LevelManager>
     {
         get
         {
-            return levelGenerator.Jail;
+            return LevelGenerator.Jail;
         }
     }
 
     [SerializeField]
     private LevelGenerator levelGenerator;
 
+    private LevelGenerator LevelGenerator
+    {
+        get
+        {
+            if (!levelGenerator)
+            {
+                levelGenerator = FindObjectOfType<LevelGenerator>();
+            }
+            return levelGenerator;
+        }
+    }
+
     public List<Color> SantaColors
     {
         get
         {
-            return levelGenerator.SantaColors;
+            return LevelGenerator.SantaColors;
         }
     }
 
@@ -56,10 +69,25 @@ public class LevelManager : Singleton<LevelManager>
     }
 
     private float timer;
-    public float Timer => timer;
+    public float Timer
+    {
+        get
+        {
+            if (timer/settings.timeLimit % 3 == 0)
+            {
+                audioSource?.PlayOneShot(audioTimer);
+            }
+            return timer;
+        }
+    }
 
     [SerializeField]
-    private SceneLoader sceneLoader;
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip audioTimer;
+
+    [SerializeField]
+    private EndgameAnimations endgameAnimationsPrefab;
 
     private void Start()
     {
@@ -69,7 +97,7 @@ public class LevelManager : Singleton<LevelManager>
     private void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= settings.timeLimit)
+        if (timer >= settings.timeLimit)
         {
             GameFinished(deliveredGifts >= settings.giftToWin);
         }
@@ -77,15 +105,21 @@ public class LevelManager : Singleton<LevelManager>
 
     public void StartLevel()
     {
-        if (!levelGenerator)
-        {
-            levelGenerator = FindObjectOfType<LevelGenerator>();
-        }
+        if (hasFinishedCreation) return;
         CreateSantas();
         CreateBefanas();
         CreateLevel();
         finishCreation?.Invoke();
         hasFinishedCreation = true;
+    }
+
+
+    public void SceneLoaded(Scene scene)
+    {
+        if (scene.name == "LevelScene")
+        {
+            StartLevel();
+        }
     }
 
     public void SetLevelSetting(LevelSettings settings)
@@ -95,7 +129,7 @@ public class LevelManager : Singleton<LevelManager>
 
     private void OnDrawGizmosSelected()
     {
-        if(settings)
+        if (settings)
         {
             Gizmos.color = new Color(0, 1, 0, 0.5f);
             Gizmos.DrawCube(settings.santasSettings.spawnAreaCenter, settings.santasSettings.spawnArea);
@@ -119,16 +153,16 @@ public class LevelManager : Singleton<LevelManager>
 
     private void CreateLevel()
     {
-        levelGenerator.GenerateLevel(settings.houseAmount,settings.giftsAmount);
+        LevelGenerator.GenerateLevel(settings.houseAmount, settings.giftsAmount);
     }
 
     public void SantaDeliveredAGift(Santa santa, Gift gift)
     {
-        if(santa && gift)
+        if (santa && gift)
         {
             deliveredGifts++;
         }
-        if(deliveredGifts >= settings.giftToWin)
+        if (deliveredGifts >= settings.giftToWin)
         {
             GameFinished(true);
         }
@@ -144,22 +178,25 @@ public class LevelManager : Singleton<LevelManager>
 
     private void GameFinished(bool win)
     {
-        StartCoroutine(cEndGame());
+        StartCoroutine(cEndGame(win));
     }
 
-    IEnumerator cEndGame()
+    IEnumerator cEndGame(bool win)
     {
         //do stuff
         //playfireworks
-        yield return null;
+        EndgameAnimations animations = Instantiate(endgameAnimationsPrefab);
+        animations.StartAnimations(win);
+        bool finished = false;
+        animations.finishedAnimations += () => finished = true;
+        yield return new WaitUntil(() => finished);
         DestroyWord();
     }
 
     private void DestroyWord()
     {
-        sceneLoader.LoadScene("MainScene");
-        sceneLoader.sceneLoaded -= StartLevel;
-        sceneLoader.sceneLoaded += () => Destroy(sceneLoader.gameObject);
+        SceneManager.LoadScene("MainScene");
+        SceneManager.sceneLoaded -= (Scene scene, LoadSceneMode mode) => Destroy(gameObject);
         Destroy(gameObject);
     }
 }

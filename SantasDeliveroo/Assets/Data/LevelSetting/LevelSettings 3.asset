@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelSettings 3
   m_EditorClassIdentifier: 
   timeLimit: 300
-  giftToWin: 5
+  giftToWin: 3
   giftsAmount: 10
   houseAmount: 20
   santasSettings:

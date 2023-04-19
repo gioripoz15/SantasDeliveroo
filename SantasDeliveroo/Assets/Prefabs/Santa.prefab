@@ -91,13 +91,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  maxGiftCanCarry: 3
+  speedFallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00000117952
+      value: 0.4994716
+      inSlope: 0.5005278
+      outSlope: 0.5005278
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.5005278
+      outSlope: 0.5005278
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxGiftCanCarry: 5
   lookAtSpeed: 5
   light: {fileID: 414635960305288977}
   lightColor: {r: 1, g: 0.92156863, b: 0, a: 1}
   audioSource: {fileID: -7007359088508176037}
   pickUpClip: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
-  deliverClip: {fileID: 0}
+  deliverClip: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   POVtransform: {fileID: 1208074604165406964}
 --- !u!65 &4712979979886273330
 BoxCollider:

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b121ea95fa77646a57b2e0bcaa3138, type: 3}
   m_Name: LevelSettings 6
   m_EditorClassIdentifier: 
-  timeLimit: 400
-  giftToWin: 7
-  giftsAmount: 17
+  timeLimit: 330
+  giftToWin: 3
+  giftsAmount: 10
   houseAmount: 20
   santasSettings:
     prefab: {fileID: 3312274726564334358, guid: bd41d18e7f3f6c043869fd139d10f733, type: 3}
-    amount: 3
+    amount: 1
     speed: 20
     spawnArea: {x: 109.2, y: 0, z: 103.8}
     spawnAreaCenter: {x: 141.6, y: 35, z: -255.2}

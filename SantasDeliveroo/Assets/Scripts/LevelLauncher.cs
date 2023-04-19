@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelLauncher : MonoBehaviour
 {
     [SerializeField]
     private LevelManager levelManager;
-
-    [SerializeField]
-    private SceneLoader sceneLoader;
 
     [SerializeField]
     private string levelSceneName = "LevelScene";
@@ -50,8 +48,15 @@ public class LevelLauncher : MonoBehaviour
     public void LoadLevelScene()
     {
         levelManager.SetLevelSetting(levelSettingsList[difficulty]);
-        sceneLoader.sceneLoaded += levelManager.StartLevel;
-        sceneLoader.LoadScene(levelSceneName);
+        SceneManager.sceneLoaded -= (Scene scene, LoadSceneMode mode) =>
+        {
+            levelManager.SceneLoaded(scene);
+        };
+        SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) =>
+        {
+            levelManager.SceneLoaded(scene);
+        };
+        SceneManager.LoadScene(levelSceneName);
     }
 
     public void LoadLevelSceneWithClip(AudioClip clip)

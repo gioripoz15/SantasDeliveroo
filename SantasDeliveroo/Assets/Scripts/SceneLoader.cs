@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader: MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     public Action sceneLoaded;
     private void Start()
@@ -15,5 +15,6 @@ public class SceneLoader: MonoBehaviour
     {
         SceneManager.LoadScene(name);
         SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => sceneLoaded?.Invoke();
+
     }
 }

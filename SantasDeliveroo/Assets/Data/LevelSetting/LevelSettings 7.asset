@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LevelSettings 7
   m_EditorClassIdentifier: 
   timeLimit: 300
-  giftToWin: 3
+  giftToWin: 4
   giftsAmount: 10
   houseAmount: 20
   santasSettings:
@@ -24,8 +24,8 @@ MonoBehaviour:
     spawnAreaCenter: {x: 141.6, y: 35, z: -255.2}
   befanasSettings:
     prefab: {fileID: 1379165798997424665, guid: b05def3bceb0f284db069683d34c5c98, type: 3}
-    amount: 4
-    speed: 12
+    amount: 3
+    speed: 17
     spawnArea: {x: 116.32, y: 0, z: 75.7}
     spawnAreaCenter: {x: -106.3, y: 35, z: 64.6}
   playArea: {x: 444.46, y: 0, z: 424.4}

@@ -15,9 +15,15 @@ public class Santa : MonoBehaviour
             {
                 return speed;
             }
-            return (speed / gifts.Count);
+            processedSpeed = speed * (speedFallCurve.Evaluate(((float)maxGiftCanCarry - (float)gifts.Count)/(float)maxGiftCanCarry ));
+            return processedSpeed;
         }
     }
+    private float processedSpeed;
+
+    [SerializeField]
+    private AnimationCurve speedFallCurve;
+
     private List<PathPoint> pathPoints = new List<PathPoint>();
     public List<PathPoint> PathPoints => pathPoints;
 
