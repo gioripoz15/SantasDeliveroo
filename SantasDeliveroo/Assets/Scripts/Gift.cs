@@ -4,7 +4,23 @@ using UnityEngine;
 
 public class Gift : MonoBehaviour
 {
-    public GameObject targetHouse;
+    public GameObject targetHouseGameObject;
+    private House targetHosue;
+    private House TargetHouse
+    {
+        get
+        {
+            if (!targetHosue)
+            {
+                targetHosue = targetHouseGameObject.GetComponentInChildren<House>();
+                if (!targetHosue)
+                {
+                    targetHosue = targetHouseGameObject.GetComponentInParent<House>();
+                }
+            }
+            return targetHosue;
+        }
+    }
     public Santa Owner;
     [SerializeField]
     private Material highlightMaterial;
@@ -38,22 +54,13 @@ public class Gift : MonoBehaviour
     {
         if (add)
         {
-            Highlight highlight = targetHouse.GetComponent<Highlight>();
-            if (highlight) return;
-
-            highlight = targetHouse.AddComponent<Highlight>();
-            highlight.highlightMaterial = highlightMaterial;
-            highlight.RecurseHighlight();
+            TargetHouse.HighlightHouse(highlightMaterial);
             SetLineRenderer();
 
         }
         else
         {
-            Highlight highlight = targetHouse?.GetComponent<Highlight>();
-            if (highlight)
-            {
-                highlight.RemoveHighlight();
-            }
+            TargetHouse.RemoveHighlight();
             if (currentLine)
             {
                 Destroy(currentLine.gameObject);
@@ -75,6 +82,6 @@ public class Gift : MonoBehaviour
             startPosition = Owner.transform.position;
         }
         currentLine.SetPosition(0, startPosition);
-        currentLine.SetPosition(1, targetHouse.transform.position);
+        currentLine.SetPosition(1, targetHouseGameObject.transform.position);
     }
 }

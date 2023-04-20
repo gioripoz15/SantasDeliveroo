@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4401679083308778}
   - component: {fileID: -3082291740469844117}
+  - component: {fileID: -2750754620672466757}
   m_Layer: 0
   m_Name: Build_G-middle_Prefab
   m_TagString: Untagged
@@ -47,6 +48,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assignedGifts: []
   linePrefab: {fileID: 3352608110156062592, guid: abb1851e937f3f441b507bf27f8cc40a, type: 3}
+  permanentHighlight: {fileID: -2750754620672466757}
+--- !u!114 &-2750754620672466757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042995447606548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f2023661233ff41b2e5bfcedb6ac38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 2100000, guid: 2680ec400162b574fa49ba7887ca032c, type: 2}
 --- !u!1 &1998908465653332
 GameObject:
   m_ObjectHideFlags: 0

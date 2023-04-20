@@ -9,6 +9,31 @@ public class House : MonoBehaviour
     [SerializeField]
     private LineRenderer linePrefab;
     private List<LineRenderer> currentLines = new List<LineRenderer>();
+
+    private Highlight highlight;
+    public Highlight Highlight => highlight;
+
+    [SerializeField]
+    private Highlight permanentHighlight;
+
+    public Highlight PermanentHighlight => permanentHighlight;
+
+    public void HighlightHouse(Material highlightMaterial)
+    {
+        if (highlight) return;
+
+        highlight = gameObject.AddComponent<Highlight>();
+        highlight.highlightMaterial = highlightMaterial;
+        highlight.RecurseHighlight();
+    }
+    public void RemoveHighlight()
+    {
+        if (highlight)
+        {
+            highlight.RemoveHighlight();
+        }
+    }
+
     public void SetLineRenderer(bool on)
     {
         if (on)

@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 188f07b2623bb5048886bdd1f61196d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetHouse: {fileID: 0}
+  targetHouseGameObject: {fileID: 0}
   Owner: {fileID: 0}
-  highlightMaterial: {fileID: 2100000, guid: 7108fa4046be98240a76650fce6dbd4f, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 8506792d260498c40b8b0b3ac0e8719e, type: 2}
   linePrefab: {fileID: 3352608110156062592, guid: abb1851e937f3f441b507bf27f8cc40a, type: 3}
   model: {fileID: 5699656664883902169}
   collider: {fileID: 7665454952550428881}
@@ -63,8 +63,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 36.53393, y: 12.613043, z: 32.282944}
-  m_Center: {x: 0.08403969, y: 5.8065214, z: -0.7772608}
+  m_Size: {x: 13.850948, y: 17.564964, z: 15.989539}
+  m_Center: {x: 0.24377918, y: 5.72665, z: 0.02143526}
 --- !u!1 &5699656664883902169
 GameObject:
   m_ObjectHideFlags: 0

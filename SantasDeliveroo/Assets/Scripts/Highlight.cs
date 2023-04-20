@@ -8,6 +8,16 @@ public class Highlight : MonoBehaviour
 
     private List<Highlight> highlightList = new List<Highlight>();
 
+    bool highlightOnStart = false;
+
+    private void Start()
+    {
+        if (highlightOnStart)
+        {
+            RecurseHighlight();
+        }
+    }
+
     public void RecurseHighlight()
     {
         highlightList.Clear();

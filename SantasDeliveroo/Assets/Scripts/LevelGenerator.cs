@@ -42,15 +42,24 @@ public class LevelGenerator : MonoBehaviour
     {
         int maxGiftPerHouse = Mathf.CeilToInt((float)giftsAmount/(float)housesAmount);
         SpawnGifts(giftsAmount);
+        List<House> avaiableHouses = new List<House>(LevelManager.Instance.Settings.houseAmount);
+        for (int i = 0; i< LevelManager.Instance.Settings.houseAmount; i++)
+        {
+            int randomHouseIndex = Random.Range(0, houses.Count - 1);
+            avaiableHouses.Add(houses[randomHouseIndex]);
+            houses.Remove(houses[randomHouseIndex]);
+
+        }
         foreach (var gift in gifts)
         {
             //rework the way it distributes the gift?
-            int randomHouseIndex = Random.Range(0, houses.Count - 1);
-            gift.targetHouse = houses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
-            houses[randomHouseIndex].assignedGifts.Add(gift);
-            if (houses[randomHouseIndex].assignedGifts.Count >= maxGiftPerHouse)
+            int randomHouseIndex = Random.Range(0, avaiableHouses.Count - 1);
+            gift.targetHouseGameObject = avaiableHouses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
+            avaiableHouses[randomHouseIndex].assignedGifts.Add(gift);
+            avaiableHouses[randomHouseIndex].PermanentHighlight.RecurseHighlight();
+            if (avaiableHouses[randomHouseIndex].assignedGifts.Count >= maxGiftPerHouse)
             {
-                houses.RemoveAt(randomHouseIndex);
+                avaiableHouses.RemoveAt(randomHouseIndex);
             }
         }
     }

@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4619626185693152}
   - component: {fileID: -4611342142936777092}
+  - component: {fileID: 5100458811335571363}
   m_Layer: 0
   m_Name: Building_F_prefab
   m_TagString: Untagged
@@ -159,3 +160,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assignedGifts: []
   linePrefab: {fileID: 3352608110156062592, guid: abb1851e937f3f441b507bf27f8cc40a, type: 3}
+  permanentHighlight: {fileID: 5100458811335571363}
+--- !u!114 &5100458811335571363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772776456942506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f2023661233ff41b2e5bfcedb6ac38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 2100000, guid: 2680ec400162b574fa49ba7887ca032c, type: 2}

@@ -201,7 +201,7 @@ public class Santa : MonoBehaviour
         foreach(var gift in gifts)
         {
             house = house.GetComponentInChildren<Collider>().gameObject;
-            if(gift.targetHouse && gift.targetHouse == house)
+            if(gift.targetHouseGameObject && gift.targetHouseGameObject == house)
             {
                 LevelManager.Instance.SantaDeliveredAGift(this, gift);
                 gift.HighlightTargetHouse(false);
