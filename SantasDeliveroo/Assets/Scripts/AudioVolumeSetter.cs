@@ -26,6 +26,10 @@ public class AudioVolumeSetter : MonoBehaviour
 
     public void SetVolume(float value)
     {
+        if(value == -1)
+        {
+            value = volumeSlider.value;
+        }
         AudioListener.volume = value;
         iconVolumeOff.SetActive(value <= 0);
         iconVolume.SetActive(value > 0);
