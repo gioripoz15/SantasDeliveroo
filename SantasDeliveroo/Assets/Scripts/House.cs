@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class House : MonoBehaviour
@@ -16,7 +17,39 @@ public class House : MonoBehaviour
     [SerializeField]
     private Highlight permanentHighlight;
 
-    public Highlight PermanentHighlight => permanentHighlight;
+    private List<MeshRenderer> allMeshRenderers = new List<MeshRenderer>();
+    private List<MeshRenderer> AllMeshRenderers
+    {
+        get
+        {
+            if(allMeshRenderers.Count == 0)
+            {
+                allMeshRenderers = GetComponentsInChildren<MeshRenderer>().ToList();
+            }
+            return allMeshRenderers;
+        }
+        set
+        {
+            allMeshRenderers = value;
+        }
+    }
+
+    private Highlight PermanentHighlight => permanentHighlight;
+
+    public bool startHighlighted = false;
+
+
+    private void Start()
+    {
+        if (startHighlighted)
+        {
+            permanentHighlight.RecurseHighlight();
+            foreach (var rend in AllMeshRenderers)
+            {
+                rend.enabled = false;
+            }
+        }
+    }
 
     public void HighlightHouse(Material highlightMaterial)
     {
@@ -25,12 +58,20 @@ public class House : MonoBehaviour
         highlight = gameObject.AddComponent<Highlight>();
         highlight.highlightMaterial = highlightMaterial;
         highlight.RecurseHighlight();
+        foreach (var rend in AllMeshRenderers)
+        {
+            rend.enabled = false;
+        }
     }
     public void RemoveHighlight()
     {
         if (highlight)
         {
             highlight.RemoveHighlight();
+            foreach (var rend in AllMeshRenderers)
+            {
+                rend.enabled = true;
+            }
         }
     }
 

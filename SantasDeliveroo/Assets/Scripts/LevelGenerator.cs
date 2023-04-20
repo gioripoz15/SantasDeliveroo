@@ -60,7 +60,7 @@ public class LevelGenerator : MonoBehaviour
             int randomHouseIndex = Random.Range(0, avaiableHouses.Count - 1);
             gift.targetHouseGameObject = avaiableHouses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
             avaiableHouses[randomHouseIndex].assignedGifts.Add(gift);
-            avaiableHouses[randomHouseIndex].PermanentHighlight.RecurseHighlight();
+            avaiableHouses[randomHouseIndex].startHighlighted = true;
             if (avaiableHouses[randomHouseIndex].assignedGifts.Count >= maxGiftPerHouse)
             {
                 avaiableHouses.RemoveAt(randomHouseIndex);

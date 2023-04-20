@@ -65,7 +65,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         get
         {
-            if (timer/settings.timeLimit % 3 == 0)
+            if (timer / settings.timeLimit % 3 == 0)
             {
                 audioSource?.PlayOneShot(audioTimer);
             }
@@ -81,6 +81,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private EndgameAnimations endgameAnimationsPrefab;
 
+    private bool gameFinished = false;
     private void Start()
     {
         DontDestroyOnLoad(this);
@@ -168,7 +169,11 @@ public class LevelManager : Singleton<LevelManager>
     //handle the end game
     private void GameFinished(bool win)
     {
-        StartCoroutine(cEndGame(win));
+        if (!gameFinished)
+        {
+            gameFinished = true;
+            StartCoroutine(cEndGame(win));
+        }
     }
 
     IEnumerator cEndGame(bool win)

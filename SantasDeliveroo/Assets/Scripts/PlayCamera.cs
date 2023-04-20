@@ -23,6 +23,10 @@ public class PlayCamera : MonoBehaviour
     [SerializeField]
     private Transform tacticalViewPoint;
 
+
+    [SerializeField]
+    private Transform freelViewPoint;
+
     [SerializeField]
     private InputActionProperty cameraMove;
     [SerializeField]
@@ -133,7 +137,8 @@ public class PlayCamera : MonoBehaviour
         else
         {
             cameraType = CameraType.FREE;
-            rotationX = -transform.eulerAngles.x;
+            SetCameraPosition(freelViewPoint);
+            rotationX = -freelViewPoint.eulerAngles.x;
 
         }
         typeChanged?.Invoke(cameraType);

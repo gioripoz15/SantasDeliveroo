@@ -8,16 +8,6 @@ public class Highlight : MonoBehaviour
 
     private List<Highlight> highlightList = new List<Highlight>();
 
-    bool highlightOnStart = false;
-
-    private void Start()
-    {
-        if (highlightOnStart)
-        {
-            RecurseHighlight();
-        }
-    }
-
     public void RecurseHighlight()
     {
         highlightList.Clear();
@@ -32,8 +22,8 @@ public class Highlight : MonoBehaviour
         Highlight highlight =  (new GameObject("Highlight")).AddComponent<Highlight>();
         highlight.transform.position = renderer.transform.position;
         highlight.transform.rotation = renderer.transform.rotation;
-        highlight.transform.parent = renderer.transform;
-        highlight.transform.localScale = new Vector3(1,1,1);
+        //highlight.transform.parent = renderer.transform;
+        highlight.transform.localScale = renderer.transform.lossyScale;
         MeshRenderer meshRenderer =  highlight.gameObject.AddComponent<MeshRenderer>();
         MeshFilter meshfilter = highlight.gameObject.AddComponent<MeshFilter>();
         meshfilter.mesh = renderer.GetComponent<MeshFilter>().mesh;
