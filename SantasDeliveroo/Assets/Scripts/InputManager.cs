@@ -9,6 +9,15 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : Singleton<InputManager>
 {
+    private enum FoundType
+    {
+        None,
+        Point,
+        House,
+        Santa,
+        Gift,
+
+    }
 
     [SerializeField]
     private InputActionProperty leftClick;
@@ -32,42 +41,55 @@ public class InputManager : Singleton<InputManager>
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray);
         bool deselect = false;
-        foreach (var hit in hits)
+        GameObject foundHit = null;
+        FoundType foundType = FoundType.None;
+        //i do one cycle to have a "Priority" on the hits because the raycast hit sorting is not always correct
+        foreach(var hit in hits)
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("UI")) continue;
-
-            Santa santa = hit.collider.gameObject.GetComponent<Santa>();
-
-            if (santa)
+            if (hit.collider.gameObject.GetComponent<Santa>())
             {
-                Santa clickedSanta = santa;
-                SelectionHandler.Instance.SelectedSanta = clickedSanta;
+                foundType = FoundType.Santa;
+                foundHit = hit.collider.gameObject;
+            }
+            if (foundType!=FoundType.Santa && hit.collider.gameObject.GetComponent<Gift>())
+            {
+                foundType = FoundType.Gift;
+                foundHit = hit.collider.gameObject;
+            }
+            if (foundType != FoundType.Santa && foundType != FoundType.Gift && hit.collider.gameObject.GetComponentInParent<House>())
+            {
+                foundType = FoundType.House;
+                foundHit = hit.collider.gameObject;
+            }
+        }
+        switch (foundType)
+        {
+            case FoundType.None:
+                deselect = true;
+                break;
+            case FoundType.Gift:
+                Gift gift = foundHit.GetComponent<Gift>();
+                SelectionHandler.Instance.SelectedGift = gift;
                 deselect = false;
                 break;
-            }
-            else
-            {
-                Gift gift = hit.collider.gameObject.GetComponent<Gift>();
-                if (gift)
-                {
-                    Gift clickedGift = gift.gameObject.GetComponent<Gift>();
-                    SelectionHandler.Instance.SelectedGift = clickedGift;
-                    deselect = false;
-                    break;
-                }
-                else
-                {
-                    deselect = true;
-                }
-
-            }
+            case FoundType.Santa:
+                Santa santa = foundHit.GetComponent<Santa>();
+                SelectionHandler.Instance.SelectedSanta = santa;
+                deselect = false;
+                break;
+            case FoundType.House:
+                House house = foundHit.GetComponentInParent<House>();
+                SelectionHandler.Instance.SelectedHouse = house;
+                deselect = false;
+                break;
         }
         if (deselect)
         {
             SelectionHandler.Instance.DeselectAll();
         }
     }
-    //move click
+    
+    //clicking i move and assign the time of endpoint
     private void RightClickRay(CallbackContext ctx)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

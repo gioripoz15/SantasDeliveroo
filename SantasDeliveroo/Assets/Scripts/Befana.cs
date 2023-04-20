@@ -19,7 +19,7 @@ public class Befana : MonoBehaviour
         StartCoroutine(cPatrol());
 
     }
-
+    //i use the trigger to move throwards a santa
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -38,6 +38,7 @@ public class Befana : MonoBehaviour
         }
     }
 
+    // i use the NOT trigger collider to "kidnap" the poor santa :(
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
@@ -52,6 +53,7 @@ public class Befana : MonoBehaviour
             Destroy(kidnappedSanta);
             var jail = LevelManager.Instance.Jail;
             transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
+            transform.eulerAngles = Vector3.zero;
             StopAllCoroutines();
             PlayCaughtAudio(caughtClip);
             Destroy(this);
@@ -70,10 +72,11 @@ public class Befana : MonoBehaviour
         santa.StopCorutines();
         var jail = LevelManager.Instance.Jail;
         santa.transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
-        santa.transform.eulerAngles = new Vector3(0, santa.transform.eulerAngles.y, 0);
+        santa.transform.eulerAngles = new Vector3(0, 0, 0);
         LevelManager.Instance.SantaHandler.RemoveSanta(santa);
     }
 
+    //follow the santa, it loops until stopped
     private IEnumerator cFollow(Transform santa)
     {
         for (; ; )
@@ -84,6 +87,7 @@ public class Befana : MonoBehaviour
         }
     }
 
+    //partol until stopped and move to random point in the map
     private IEnumerator cPatrol()
     {
         float lerpTime = 0;

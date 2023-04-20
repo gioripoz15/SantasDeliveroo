@@ -45,6 +45,7 @@ public class LevelLauncher : MonoBehaviour
         difficulty = diff;
     }
 
+    //load the level with settings
     public void LoadLevelScene()
     {
         levelManager.SetLevelSetting(levelSettingsList[difficulty]);

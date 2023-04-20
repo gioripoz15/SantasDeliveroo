@@ -75,6 +75,8 @@ public class PlayCamera : MonoBehaviour
         transform.position += transform.forward * moveValue.y * Time.deltaTime;
         transform.position += transform.right * moveValue.x * Time.deltaTime;
     }
+
+    //allow rotation on constraints looking up
     private void MoveRotation()
     {
         var rotationHorizontal = Input.GetAxis("Mouse X") * mouseSpeed.x * Time.deltaTime;
@@ -85,6 +87,7 @@ public class PlayCamera : MonoBehaviour
 
         rotationX += rotationVertical;
         rotationX = Mathf.Clamp(rotationX, -rotationLimit, rotationLimit);
+        //limit the speed based on the angle to prevent fast spinning when looking up or down
         transform.Rotate(Vector3.up * rotationHorizontal / ((Mathf.Abs(rotationX) / rotationLimit) + 1) / 2, Space.World);
 
         var rotationY = transform.localEulerAngles.y;

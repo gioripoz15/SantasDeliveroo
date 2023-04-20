@@ -27,6 +27,7 @@ public class PathShower : MonoBehaviour
 
     private void Start()
     {
+        //subscribe to  all events to update path
         SelectionHandler.Instance.SantaSelected -= SantaSelected;
         SelectionHandler.Instance.SantaSelected += SantaSelected;
         SelectionHandler.Instance.SantaSelected += (Santa santa) => show = true;
@@ -112,6 +113,7 @@ public class PathShower : MonoBehaviour
         UpdatePoint(point);
     }
 
+    //used to create a new point in the path
     private List<GameObject> CreatePointObjects(PathPoint previousPoint, PathPoint point)
     {
         List<GameObject> pointObjects = new List<GameObject>();
@@ -137,7 +139,6 @@ public class PathShower : MonoBehaviour
             selectedSantaMarker = currentSantaMarkerRectTransform;
             santaMarker.SetColor(currentActionColor);
             santaMarker.DisableArrow();
-            //pointObjects.Add(currentMarker.gameObject);
             previousPoint.position = SelectionHandler.Instance.SelectedSanta.transform.position;
         }
         RectTransform lookAtRect = selectedSantaMarker;
@@ -171,6 +172,7 @@ public class PathShower : MonoBehaviour
         }
     }
 
+    //create the line between two point
     private LineRenderer CreateLine(Vector3 pos1, Vector3 pos2)
     {
         LineRenderer line = Instantiate(linePrefab);
@@ -180,6 +182,7 @@ public class PathShower : MonoBehaviour
         return line;
     }
 
+    //update the point color
     private void UpdatePoint(PathPoint point)
     {
         if (!pathObjects.ContainsKey(point)) return;
@@ -206,6 +209,7 @@ public class PathShower : MonoBehaviour
             UIPointMarker currentMarker = Instantiate(markerPrefab);
             RectTransform currentMarkerRectTransform = currentMarker.GetComponent<RectTransform>();
             currentMarker.transform.parent = transform;
+            //set the position to the corresponding world position of santa
             currentMarkerRectTransform.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Camera.main,
                 SelectionHandler.Instance.SelectedSanta.transform.position) - canvas.sizeDelta / 2;
             selectedSantaMarker = currentMarkerRectTransform;
@@ -214,10 +218,9 @@ public class PathShower : MonoBehaviour
         }
         selectedSantaMarker.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Camera.main,
             SelectionHandler.Instance.SelectedSanta.transform.position) - canvas.sizeDelta / 2;
-
-        //updateOther?
     }
 
+    //update all line renderers
     private void UpdateLine()
     {
 
@@ -239,8 +242,13 @@ public class PathShower : MonoBehaviour
         {
             SelectionHandler.Instance.SelectedGift.SetLineRenderer();
         }
+        if (SelectionHandler.Instance.SelectedHouse)
+        {
+            SelectionHandler.Instance.SelectedHouse.SetLineRenderer(true);
+        }
     }
 
+    //rotate the ui object to look at another
     private void UIYLookAt(RectTransform rect, RectTransform target)
     {
         rect.up = (rect.position - target.position).normalized;

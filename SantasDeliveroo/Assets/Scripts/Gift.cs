@@ -25,6 +25,15 @@ public class Gift : MonoBehaviour
         collider.enabled = false;
     }
 
+    public void Deliver()
+    {
+        if (currentLine)
+        {
+            Destroy(currentLine);
+        }
+    }
+
+    //highlight the hosue adding the line
     public void HighlightTargetHouse(bool add)
     {
         if (add)
@@ -52,6 +61,7 @@ public class Gift : MonoBehaviour
         }
     }
 
+    //handle the line renderer to the house
     public void SetLineRenderer()
     {
         if (!currentLine)

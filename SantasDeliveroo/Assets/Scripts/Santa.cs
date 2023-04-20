@@ -83,7 +83,7 @@ public class Santa : MonoBehaviour
     public void AddPathPoint(PathPoint point)
     {
         if(pathPoints.Count > 0)
-        {
+        {   //prevent to select multiple times the same gift in the programmed path
             if(point.pointType == PathPoint.PointType.GIFT)
             {
                 foreach(var p in pathPoints)
@@ -160,6 +160,7 @@ public class Santa : MonoBehaviour
         }
     }
 
+    //controls what point is reached to do an action
     private void ReachedPoint(PathPoint point)
     {
         PathPoint.PointType pointType = point.pointType;
@@ -182,6 +183,7 @@ public class Santa : MonoBehaviour
     {
         if (maxGiftCanCarry <= gifts.Count) return;
         Gift gift = giftObj.GetComponent<Gift>();
+        //pickup and disable gift
         if (gift && !gift.Owner)
         {
             gifts.Add(gift);
@@ -195,12 +197,12 @@ public class Santa : MonoBehaviour
     private void TryDeliverToHouse(GameObject house)
     {
         List<Gift> giftsToRemove = new List<Gift>();
+        //deliver and destry gift
         foreach(var gift in gifts)
         {
             house = house.GetComponentInChildren<Collider>().gameObject;
             if(gift.targetHouse && gift.targetHouse == house)
             {
-                //DoSomething
                 LevelManager.Instance.SantaDeliveredAGift(this, gift);
                 gift.HighlightTargetHouse(false);
                 giftsToRemove.Add(gift);
@@ -209,6 +211,7 @@ public class Santa : MonoBehaviour
         foreach(var gift in giftsToRemove)
         {
             gifts.Remove(gift);
+            gift.Deliver();
             Destroy(gift.gameObject);
             deliveredGift?.Invoke(gift);
             PlayAudio(deliverClip);

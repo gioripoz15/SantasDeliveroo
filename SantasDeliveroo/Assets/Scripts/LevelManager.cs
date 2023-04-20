@@ -105,7 +105,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void StartLevel()
     {
-        if (hasFinishedCreation) return;
+        if (hasFinishedCreation) return;//to prevent multiple spawns
         CreateSantas();
         CreateBefanas();
         CreateLevel();
@@ -116,6 +116,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SceneLoaded(Scene scene)
     {
+        //laod the level only if the scene loaded is the levelscene
         if (scene.name == "LevelScene")
         {
             StartLevel();
@@ -176,6 +177,7 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
+    //handle the end game
     private void GameFinished(bool win)
     {
         StartCoroutine(cEndGame(win));

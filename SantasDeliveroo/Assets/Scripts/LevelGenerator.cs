@@ -9,12 +9,12 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField]
     private Gift giftPrefab;
-    //randomGenerator in the city area?
     private List<Gift> gifts = new List<Gift>();
 
     [SerializeField]
     private Vector2Int giftSpawnArea = Vector2Int.zero;
 
+    //the object where the santa and the befanas go when catched
     [SerializeField]
     private BoxCollider jail;
 
@@ -44,6 +44,7 @@ public class LevelGenerator : MonoBehaviour
         SpawnGifts(giftsAmount);
         foreach (var gift in gifts)
         {
+            //rework the way it distributes the gift?
             int randomHouseIndex = Random.Range(0, houses.Count - 1);
             gift.targetHouse = houses[randomHouseIndex].GetComponentInChildren<Collider>().gameObject;
             houses[randomHouseIndex].assignedGifts.Add(gift);
@@ -51,7 +52,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 houses.RemoveAt(randomHouseIndex);
             }
-            
         }
     }
 
