@@ -13,15 +13,23 @@ public class House : MonoBehaviour
     {
         if (on)
         {
+
+            foreach (var line in currentLines)
+            {
+                Destroy(line.gameObject);
+            }
+            currentLines.Clear();
+
             assignedGifts.RemoveAll(x => x == null);
             foreach (var gift in assignedGifts)
             {
                 if(gift!= null)
                 {
+                    Vector3 giftPosition = gift.Owner ? gift.Owner.transform.position : gift.transform.position;
                     LineRenderer currentLine = Instantiate(linePrefab);
                     Vector3 startPosition = transform.position;
                     currentLine.SetPosition(0, startPosition);
-                    currentLine.SetPosition(1, gift.transform.position);
+                    currentLine.SetPosition(1, giftPosition);
                     currentLines.Add(currentLine);
                 }
                 
