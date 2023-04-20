@@ -15,18 +15,10 @@ public class LevelManager : Singleton<LevelManager>
     public SantaHandler SantaHandler => santaHandler;
     private BefanaHandler befanaHandler;
 
-    public BoxCollider Jail
-    {
-        get
-        {
-            return LevelGenerator.Jail;
-        }
-    }
-
     [SerializeField]
     private LevelGenerator levelGenerator;
 
-    private LevelGenerator LevelGenerator
+    public LevelGenerator LevelGenerator
     {
         get
         {
@@ -132,10 +124,6 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (settings)
         {
-            Gizmos.color = new Color(0, 1, 0, 0.5f);
-            Gizmos.DrawCube(settings.santasSettings.spawnAreaCenter, settings.santasSettings.spawnArea);
-            Gizmos.color = new Color(1, 0, 0, 0.5f);
-            Gizmos.DrawCube(settings.befanasSettings.spawnAreaCenter, settings.befanasSettings.spawnArea);
             Gizmos.color = new Color(1, 1, 1, 0.2f);
             Gizmos.DrawCube(settings.playAreaCenter, settings.playArea);
         }

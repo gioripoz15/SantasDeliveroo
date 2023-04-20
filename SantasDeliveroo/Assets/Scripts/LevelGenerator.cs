@@ -14,15 +14,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private Vector2Int giftSpawnArea = Vector2Int.zero;
 
-    //the object where the santa and the befanas go when catched
-    [SerializeField]
-    private BoxCollider jail;
-
-    public BoxCollider Jail
-    {
-        get { return jail; }
-    }
-
     [SerializeField]
     List<Color> santaColors = new List<Color>();
 
@@ -30,6 +21,19 @@ public class LevelGenerator : MonoBehaviour
     {
         get { return santaColors; }
     }
+
+    [SerializeField]
+    AreaWithPoints befanasSpawn;
+    public AreaWithPoints BefanasSpawn => befanasSpawn;
+
+    [SerializeField]
+    AreaWithPoints santasSpawn;
+    public AreaWithPoints SantasSpawn => santasSpawn;
+
+
+    [SerializeField]
+    AreaWithPoints jailSpawns;
+    public AreaWithPoints JailSpawns => jailSpawns;
 
     private void OnDrawGizmosSelected()
     {

@@ -51,9 +51,6 @@ public class Befana : MonoBehaviour
                 SelectionHandler.Instance.SelectedSanta = null;
             }
             Destroy(kidnappedSanta);
-            var jail = LevelManager.Instance.Jail;
-            transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
-            transform.eulerAngles = Vector3.zero;
             StopAllCoroutines();
             PlayCaughtAudio(caughtClip);
             Destroy(this);
@@ -70,9 +67,24 @@ public class Befana : MonoBehaviour
     private void KidnapSanta(Santa santa)
     {
         santa.StopCorutines();
-        var jail = LevelManager.Instance.Jail;
-        santa.transform.position = GetPointInArea(jail.center + jail.transform.position, jail.size);
+        var points = LevelManager.Instance.LevelGenerator.JailSpawns.points;
+        if(points.Count == 0)
+        {
+            santa.transform.position = LevelManager.Instance.LevelGenerator.JailSpawns.transform.position;
+            santa.transform.eulerAngles = new Vector3(0, 0, 0);
+            points.RemoveAt(0);
+
+            transform.position = LevelManager.Instance.LevelGenerator.JailSpawns.transform.position;
+            transform.eulerAngles = Vector3.zero;
+            points.RemoveAt(0);
+        }
+        santa.transform.position = points[0].position;
         santa.transform.eulerAngles = new Vector3(0, 0, 0);
+        points.RemoveAt(0);
+
+        transform.position = points[0].position;
+        transform.eulerAngles = Vector3.zero;
+        points.RemoveAt(0);
         LevelManager.Instance.SantaHandler.RemoveSanta(santa);
     }
 

@@ -62,22 +62,11 @@ public class SantaHandler : MonoBehaviour
         {
             Santa newSanta = (Instantiate(santasSettings.prefab)).GetComponent<Santa>();
             newSanta.speed = santasSettings.speed;
-            newSanta.transform.position = GetRandomSpawnPoint();
+            var spawnPoints = LevelManager.Instance.LevelGenerator.SantasSpawn.points;
+            newSanta.transform.position = spawnPoints[i%spawnPoints.Count].position;
             newSanta.transform.parent = transform;
             newSanta.lightColor = LevelManager.Instance.SantaColors[i% LevelManager.Instance.SantaColors.Count];
             santas.Add(newSanta);
         }
-    }
-
-    private Vector3 GetRandomSpawnPoint()
-    {
-        Vector3 spawnPoint = Vector3.zero;
-        Vector3 areaCenter = santasSettings.spawnAreaCenter;
-        Vector3 area = santasSettings.spawnArea;
-        spawnPoint.x = Random.Range(areaCenter.x - (area.x / 2), areaCenter.x + (area.x / 2));
-        spawnPoint.y = Random.Range(areaCenter.y - (area.y / 2), areaCenter.y + (area.y / 2));
-        spawnPoint.z = Random.Range(areaCenter.z - (area.z / 2), areaCenter.z + (area.z / 2));
-
-        return spawnPoint;
     }
 }

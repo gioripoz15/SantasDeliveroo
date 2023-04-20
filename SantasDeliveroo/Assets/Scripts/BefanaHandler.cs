@@ -26,21 +26,11 @@ public class BefanaHandler : MonoBehaviour
         {
             Befana newBefana = (Instantiate(befanasSettings.prefab)).GetComponent<Befana>();
             newBefana.speed = befanasSettings.speed;
-            newBefana.transform.position = GetRandomSpawnPoint();
+            var spawnPoints = LevelManager.Instance.LevelGenerator.BefanasSpawn.points;
+            newBefana.transform.position = spawnPoints[i % spawnPoints.Count].position;
             newBefana.transform.parent = transform;
             newBefana.SetAreaDatas(LevelManager.Instance.Settings.playArea, LevelManager.Instance.Settings.playAreaCenter);
             befanaList.Add(newBefana);
         }
-    }
-
-    private Vector3 GetRandomSpawnPoint()
-    {
-        Vector3 spawnPoint = Vector3.zero;
-        Vector3 areaCenter = befanasSettings.spawnAreaCenter;
-        Vector3 area = befanasSettings.spawnArea;
-        spawnPoint.x = Random.Range(areaCenter.x - (area.x / 2), areaCenter.x + (area.x / 2));
-        spawnPoint.y = Random.Range(areaCenter.y - (area.y / 2), areaCenter.y + (area.y / 2));
-        spawnPoint.z = Random.Range(areaCenter.z - (area.z / 2), areaCenter.z + (area.z / 2));
-        return spawnPoint;
     }
 }

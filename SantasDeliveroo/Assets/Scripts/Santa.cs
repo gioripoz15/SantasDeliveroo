@@ -37,6 +37,9 @@ public class Santa : MonoBehaviour
     private float lookAtSpeed;
 
     [SerializeField]
+    private GameObject giftbag;
+
+    [SerializeField]
     private Light light;
 
     public Color lightColor;
@@ -190,6 +193,8 @@ public class Santa : MonoBehaviour
             gift.Owner = this;
             gift.PickUpGameobject();
             pickedUpGift?.Invoke(gift);
+            //put the gift in the santa bag :)
+            giftbag.transform.localScale += Vector3.one * 2 / maxGiftCanCarry;
             PlayAudio(pickUpClip);
         }
     }
@@ -213,6 +218,7 @@ public class Santa : MonoBehaviour
             gifts.Remove(gift);
             gift.Deliver();
             Destroy(gift.gameObject);
+            giftbag.transform.localScale -= Vector3.one * 2 / maxGiftCanCarry;
             deliveredGift?.Invoke(gift);
             PlayAudio(deliverClip);
         }

@@ -22,7 +22,5 @@ public class LevelSettings : ScriptableObject
         public GameObject prefab;
         public int amount;
         public float speed;
-        public Vector3 spawnArea;
-        public Vector3 spawnAreaCenter;
     }
 }
