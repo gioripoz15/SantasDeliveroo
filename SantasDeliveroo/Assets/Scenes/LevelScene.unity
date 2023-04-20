@@ -2036,7 +2036,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.8784314, g: 0.9490196, b: 1, a: 1}
-  m_Intensity: 0.4
+  m_Intensity: 0.15
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -12505,6 +12505,7 @@ GameObject:
   - component: {fileID: 1104777990}
   - component: {fileID: 1104777992}
   - component: {fileID: 1104777993}
+  - component: {fileID: 1104777994}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -12655,7 +12656,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -12761,6 +12762,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1104777994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104777986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 312ef48c3bba06149a8ab61a7d01b6bc, type: 2}
 --- !u!1001 &1110706898
 PrefabInstance:
   m_ObjectHideFlags: 0

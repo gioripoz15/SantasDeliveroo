@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeLimit: 300
   giftToWin: 3
-  giftsAmount: 10
-  houseAmount: 20
+  giftsAmount: 20
+  houseAmount: 10
   santasSettings:
     prefab: {fileID: 3312274726564334358, guid: bd41d18e7f3f6c043869fd139d10f733, type: 3}
     amount: 3
