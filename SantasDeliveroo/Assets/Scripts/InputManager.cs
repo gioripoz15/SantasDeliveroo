@@ -51,6 +51,11 @@ public class InputManager : Singleton<InputManager>
                 foundType = FoundType.Santa;
                 foundHit = hit.collider.gameObject;
             }
+            else if(hit.collider.gameObject.GetComponentInParent<Santa>())
+            {
+                foundType = FoundType.Santa;
+                foundHit = hit.collider.gameObject;
+            }
             if (foundType!=FoundType.Santa && hit.collider.gameObject.GetComponent<Gift>())
             {
                 foundType = FoundType.Gift;
@@ -74,6 +79,10 @@ public class InputManager : Singleton<InputManager>
                 break;
             case FoundType.Santa:
                 Santa santa = foundHit.GetComponent<Santa>();
+                if (!santa)
+                {
+                    santa = foundHit.GetComponentInParent<Santa>();
+                }
                 SelectionHandler.Instance.SelectedSanta = santa;
                 deselect = false;
                 break;
