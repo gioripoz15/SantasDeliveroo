@@ -108,6 +108,7 @@ public class SelectedSantasUI : MonoBehaviour
     private void SelectGift(Gift gift)
     {
         SelectionHandler.Instance.SelectedGift = gift;
+        SelectionHandler.Instance.SelectedSanta = gift.Owner;
     }
 
 }

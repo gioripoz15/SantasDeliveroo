@@ -65,10 +65,11 @@ public class LevelManager : Singleton<LevelManager>
     {
         get
         {
-            if (timer / settings.timeLimit % 3 == 0)
+            /*float division = (int)settings.timeLimit / (int)timer;
+            if (division == 2)
             {
                 audioSource?.PlayOneShot(audioTimer);
-            }
+            }*/
             return timer;
         }
     }

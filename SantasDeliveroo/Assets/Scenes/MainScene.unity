@@ -5691,7 +5691,11 @@ PrefabInstance:
     - target: {fileID: 3926465390080849947, guid: ad45d99a57061d048b68aa8c8a21037c, type: 3}
       propertyPath: audioTimer
       value: 
-      objectReference: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
+      objectReference: {fileID: 8300000, guid: cfdd9efe32ecf23488bee31ce25918e5, type: 3}
+    - target: {fileID: 3926465390080849947, guid: ad45d99a57061d048b68aa8c8a21037c, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 600490623}
     - target: {fileID: 3926465390080849947, guid: ad45d99a57061d048b68aa8c8a21037c, type: 3}
       propertyPath: sceneLoader
       value: 
